@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
   }
 
-  int LATCHBUTTON = 1;
+  int latchButton = 1;
 
 
   @Override
