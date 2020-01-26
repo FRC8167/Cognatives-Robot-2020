@@ -7,24 +7,23 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Servo;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
+
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
+
+import frc.robot.subsystems.DriveSubsystem;
 
 //Github Test
 
@@ -37,19 +36,18 @@ import com.revrobotics.ColorMatch;
  */
 public class Robot extends TimedRobot {
 
-  private final Joystick m_stick = new Joystick(0);
   private final Timer m_timer = new Timer();
+  public static DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static OI oi;
 
-  SpeedController m_frontLeft = new PWMVictorSPX(1);
-  SpeedController m_rearLeft = new PWMVictorSPX(2);
+  SpeedController m_frontLeft = new PWMVictorSPX(RobotMap.frontLeftPort);
+  SpeedController m_rearLeft = new PWMVictorSPX(RobotMap.rearLeftPort);
   SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft, m_rearLeft);
-  SpeedController m_frontRight = new PWMVictorSPX(3);
-  SpeedController m_rearRight = new PWMVictorSPX(4);
+  SpeedController m_frontRight = new PWMVictorSPX(RobotMap.frontRightPort);
+  SpeedController m_rearRight = new PWMVictorSPX(RobotMap.rearRightPort);
   SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight, m_rearRight);
   DifferentialDrive m_robotDrive = new DifferentialDrive(m_left, m_right);
   
-  Servo latch = new Servo(9);
-  Servo latch2 = new Servo(8);
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
@@ -100,17 +98,15 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
   }
 
-  int latchButton = 1;
-
-
+	/**
+	 * This function is called periodically during operator control.
+	 */
   @Override
   public void teleopPeriodic() {
   
     //Driving code --------------------------------------------------------------------------------------
 
-    //uses the slider to get the sensitivity of the robot. sensitivity is in range [0.3, 1].
-    double sensitivity =  (1 - (m_stick.getThrottle() + 1) * 0.35);
-    m_robotDrive.arcadeDrive(-m_stick.getY() * sensitivity, m_stick.getX() * sensitivity);
+
     
     //Color Sensor Code -----------------------------------------------------------------------------------------
 
@@ -138,12 +134,12 @@ public class Robot extends TimedRobot {
 
     //Latch code------------------------------------------------------------------------------------------------
 
-    if (m_stick.getRawButton(7)) {
-      latch.set(1.0);
-      latch2.set(1.0);
+    if (OI.stick.getRawButton(7)) {
+      OI.latch.set(1.0);
+      OI.latch2.set(1.0);
     } else {
-      latch.set(0.0);
-      latch2.set(0.0);
+      OI.latch.set(0.0);
+      OI.latch2.set(0.0);
     }
   }
 
