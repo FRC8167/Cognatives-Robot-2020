@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -22,10 +25,37 @@ public class OI {
   //// joystick.
   // You create one by telling it which joystick it's on and which button
   // number it is.
-  public static Joystick stick = new Joystick(RobotMap.joystickPort);
+  public Joystick stick = new Joystick(RobotMap.joystickPort);
+  public Button button7 = new JoystickButton(stick, 7);
 
   public static Servo latch = new Servo(RobotMap.latchServoPort);
   public static Servo latch2 = new Servo(RobotMap.latchServoPort2);
+
+  public final I2C.Port i2cPort = I2C.Port.kOnboard;
+  public final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+
+  public OI() {
+
+  }
+
+/**
+	Button D1 = new JoystickButton(driverController, 1);
+	Button D2 = new JoystickButton(driverController, 2);
+	Button D3 = new JoystickButton(driverController, 3);
+	Button D4 = new JoystickButton(driverController, 4);
+	Button D5 = new JoystickButton(driverController, 5);
+	Button D6 = new JoystickButton(driverController, 6);
+	Button D7 = new JoystickButton(driverController, 7);
+	Button D8 = new JoystickButton(driverController, 8);
+	Button D9 = new JoystickButton(driverController, 9);
+	Button D10 = new JoystickButton(driverController, 10);
+
+	public OI() {
+		D1.whenPressed(new ShooterUp());
+		D2.whenPressed(new ShooterDown());
+	}
+*/
+
 
 
   // Button ButtonName = new JoystickButton(stick, buttonNumber);
