@@ -7,9 +7,11 @@
 
 package frc.robot;
 
+import java.rmi.server.ObjID;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-
+import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -27,7 +29,7 @@ public class Robot extends TimedRobot {
   private final Timer m_timer = new Timer();
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ColorSensorSubsystem colorSensorSubsystem = new ColorSensorSubsystem();
-  public static  OI oi;
+  public static  OI oi = new OI();
 
     
   /**
@@ -72,19 +74,11 @@ public class Robot extends TimedRobot {
 	 */
   @Override
   public void teleopPeriodic() {
-    //Scheduler.getInstance().run(); ??????????????????????????????????????
+    Scheduler.getInstance().run();
     
     //Color Sensor Code -----------------------------------------------------------------------------------------
 
     //Latch code------------------------------------------------------------------------------------------------
-
-    if (Robot.oi.stick.getRawButton(7)) {
-      OI.latch.set(1.0);
-      OI.latch2.set(1.0);
-    } else {
-      OI.latch.set(0.0);
-      OI.latch2.set(0.0);
-    }
   }
 
   /**
