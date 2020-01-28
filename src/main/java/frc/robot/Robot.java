@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import java.rmi.server.ObjID;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
