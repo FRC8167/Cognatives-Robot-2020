@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ColorChooseCommand;
+import frc.robot.commands.WheelMotorCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,7 +28,6 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   public Joystick stick = new Joystick(RobotMap.joystickPort);
-  public Button button7 = new JoystickButton(stick, 7);
 
   public static Servo latch = new Servo(RobotMap.latchServoPort);
   public static Servo latch2 = new Servo(RobotMap.latchServoPort2);
@@ -34,8 +35,13 @@ public class OI {
   public final I2C.Port i2cPort = I2C.Port.kOnboard;
   public final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
-  public OI() {
 
+  public OI() {
+    //if (stick.getRawButtonPressed(7)) new WheelMotorCommand();
+    Button button7 = new JoystickButton(stick, 7);
+    Button button8 = new JoystickButton(stick, 8);
+    button7.whileHeld(new WheelMotorCommand());
+    button8.whenPressed(new ColorChooseCommand());
   }
 
 /**

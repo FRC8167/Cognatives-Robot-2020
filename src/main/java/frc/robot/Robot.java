@@ -7,13 +7,12 @@
 
 package frc.robot;
 
-import java.rmi.server.ObjID;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.WheelMotorSubsystem;
 
 //Github Test
 
@@ -29,6 +28,7 @@ public class Robot extends TimedRobot {
   private final Timer m_timer = new Timer();
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ColorSensorSubsystem colorSensorSubsystem = new ColorSensorSubsystem();
+  public static WheelMotorSubsystem wheelMotorSubsystem = new WheelMotorSubsystem();
   public static  OI oi = new OI();
 
     
