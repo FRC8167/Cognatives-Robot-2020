@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.WheelMotorSubsystem;
@@ -31,6 +33,9 @@ public class Robot extends TimedRobot {
   public static WheelMotorSubsystem wheelMotorSubsystem = new WheelMotorSubsystem();
   public static  OI oi = new OI();
 
+  public static SendableChooser<String> colorChoice = new SendableChooser<String>();
+
+
     
   /**
    * This function is run when the robot is first started up and should be
@@ -38,6 +43,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    colorChoice.setDefaultOption("Yellow", "Yellow");
+    colorChoice.addOption("Green", "Green");
+    colorChoice.addOption("Red", "Red");
+    colorChoice.addOption("Blue", "Blue");
+    SmartDashboard.putData("Choose Your Color", colorChoice);
+    SmartDashboard.updateValues();
   }
 
   /**
