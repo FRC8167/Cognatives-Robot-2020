@@ -11,7 +11,7 @@ import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Robot;
@@ -61,31 +61,28 @@ public class ColorChooseCommand extends Command {
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
   
-    SmartDashboard.putNumber("Time Non Interacted", timer.get());
-  if (colorString == Robot.colorChoice.getSelected() && timer.get() <= 0.0) {
-    timer.start();
-    SmartDashboard.putNumber("Time", timer.get());
+    //SmartDashboard.putNumber("Time Non Interacted", timer.get());
+    if (colorString == Robot.colorChoice.getSelected() && timer.get() <= 0.0) {
+      timer.start();
+      //SmartDashboard.putNumber("Time", timer.get());
+    }
+    if (timer.get() > (0.4) && colorString == Robot.colorChoice.getSelected()) {
+      //SmartDashboard.putNumber("Time 3", timer.get());
+      timer.stop();
+      timer.reset();
+      Robot.wheelMotorSubsystem.wheelControl(0.0);    }
+    else if (timer.get() > 0.4 && colorString != Robot.colorChoice.getSelected()) {
+      //SmartDashboard.putNumber("Time 2", timer.get());
+      timer.stop();
+      timer.reset();
+    }
   }
-  if (timer.get() > (0.4) && colorString == Robot.colorChoice.getSelected()) {
-    SmartDashboard.putNumber("Time 3", timer.get());
-    timer.stop();
-    timer.reset();
-    Robot.wheelMotorSubsystem.wheelControl(0.0);    }
-  else if (timer.get() > 0.4 && colorString != Robot.colorChoice.getSelected()) {
-    SmartDashboard.putNumber("Time 2", timer.get());
-    timer.stop();
-    timer.reset();
-}
-
-}
 
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     if (Robot.wheelMotorSubsystem.getSpeed() == (0.0)){
-      String coolio = "Wow";
-      SmartDashboard.putString("It worked", coolio);
       return true;
     }
     return false;

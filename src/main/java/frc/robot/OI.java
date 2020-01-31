@@ -40,8 +40,10 @@ public class OI {
     //if (stick.getRawButtonPressed(7)) new WheelMotorCommand();
     Button button7 = new JoystickButton(stick, 7);
     Button button8 = new JoystickButton(stick, 8);
-    button7.whileHeld(new WheelMotorCommand());
-    button8.whenPressed(new ColorChooseCommand());
+    Button button9 = new JoystickButton(stick, 9);
+    button7.whileHeld(new WheelMotorCommand(1.0));
+    button8.whileHeld(new WheelMotorCommand(-1.0));
+    button9.whenPressed(new ColorChooseCommand());
   }
 
 /**

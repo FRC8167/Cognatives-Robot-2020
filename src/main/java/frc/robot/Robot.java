@@ -7,6 +7,12 @@
 
 package frc.robot;
 
+/*
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;*/
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,7 +37,7 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ColorSensorSubsystem colorSensorSubsystem = new ColorSensorSubsystem();
   public static WheelMotorSubsystem wheelMotorSubsystem = new WheelMotorSubsystem();
-  public static  OI oi = new OI();
+  public static OI oi = new OI();
 
   public static SendableChooser<String> colorChoice = new SendableChooser<String>();
 
@@ -43,12 +49,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    //adds color chooices to smart dashboard
     colorChoice.setDefaultOption("Yellow", "Yellow");
     colorChoice.addOption("Green", "Green");
     colorChoice.addOption("Red", "Red");
     colorChoice.addOption("Blue", "Blue");
     SmartDashboard.putData("Choose Your Color", colorChoice);
     SmartDashboard.updateValues();
+    
+    //starts the webcam
+    CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**
@@ -99,4 +109,8 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
   
+  public void addColorOptions() {
+    
+  }
+
 }

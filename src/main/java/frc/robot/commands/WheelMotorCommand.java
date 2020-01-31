@@ -11,9 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class WheelMotorCommand extends Command {
-  public WheelMotorCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  private double wheelSpeed;
+
+  public WheelMotorCommand(double wheelSpeed) {
+    this.wheelSpeed = wheelSpeed;
     requires(Robot.wheelMotorSubsystem);
   }
 
@@ -25,9 +26,9 @@ public class WheelMotorCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    int wheelSpeed = 1;
-    Robot.wheelMotorSubsystem.wheelControl(wheelSpeed);
+    Robot.wheelMotorSubsystem.wheelControl(this.wheelSpeed);
   }
+  
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
@@ -37,16 +38,14 @@ public class WheelMotorCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    int wheelSpeed = 0;
-    Robot.wheelMotorSubsystem.wheelControl(wheelSpeed);
+    Robot.wheelMotorSubsystem.wheelControl(0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    int wheelSpeed = 0;
-    Robot.wheelMotorSubsystem.wheelControl(wheelSpeed);
+    Robot.wheelMotorSubsystem.wheelControl(0.0);
   }
 
 }
