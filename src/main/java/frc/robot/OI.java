@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ColorChooseCommand;
+import frc.robot.commands.DumpSetCommand;
 import frc.robot.commands.WheelMotorCommand;
 
 /**
@@ -29,18 +30,21 @@ public class OI {
   // number it is.
   public Joystick stick = new Joystick(RobotMap.joystickPort);
 
-  public static Servo latch = new Servo(RobotMap.latchServoPort);
-  public static Servo latch2 = new Servo(RobotMap.latchServoPort2);
-
   public final I2C.Port i2cPort = I2C.Port.kOnboard;
   public final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+  public Servo dumpActuator = new Servo(RobotMap.dumpActuatorPort);
 
 
   public OI() {
-    //if (stick.getRawButtonPressed(7)) new WheelMotorCommand();
+    Button button1 = new JoystickButton(stick, 1);
     Button button7 = new JoystickButton(stick, 7);
     Button button8 = new JoystickButton(stick, 8);
     Button button9 = new JoystickButton(stick, 9);
+
+    
+    button1.whenPressed(new DumpSetCommand(-1.0));
+    button1.whenReleased(new DumpSetCommand(1.0));
+
     button7.whileHeld(new WheelMotorCommand(1.0));
     button8.whileHeld(new WheelMotorCommand(-1.0));
     button9.whenPressed(new ColorChooseCommand());
