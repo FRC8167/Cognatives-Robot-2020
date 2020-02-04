@@ -16,11 +16,9 @@ import frc.robot.Robot;
 
 public class ColorMatchCommand extends Command {
   public ColorMatchCommand() {
-    // Use requires() here to declare subsystem dependencies
     requires(Robot.colorSensorSubsystem);
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kBlueTarget);
@@ -30,7 +28,6 @@ public class ColorMatchCommand extends Command {
 
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Color detectedColor = Robot.oi.m_colorSensor.getColor();
@@ -57,19 +54,15 @@ public class ColorMatchCommand extends Command {
 
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
   }
