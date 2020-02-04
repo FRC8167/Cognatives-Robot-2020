@@ -36,12 +36,10 @@ public class OI {
 
 
   public OI() {
-    //TODO: add constants to robotmap
-    Button dumpButton = new JoystickButton(stick, 2);
-    Button wheelClockwiseButton = new JoystickButton(stick, 7);
-    Button wheelAntiClockwiseButton = new JoystickButton(stick, 8);
-    Button colorDetectButton = new JoystickButton(stick, 9);
-
+    Button dumpButton = new JoystickButton(stick, RobotMap.dumpButtonNumber);
+    Button wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber);
+    Button wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber);
+    Button colorDetectButton = new JoystickButton(stick, RobotMap.colorDetectButtonNumber);
     
     dumpButton.whenPressed(new DumpSetCommand(-1.0));
     dumpButton.whenReleased(new DumpSetCommand(1.0));
