@@ -21,6 +21,7 @@ public class ManualDriveCommand extends Command {
     double yValue = -Robot.oi.stick.getY() * sensitivity;
     double xValue = Robot.oi.stick.getX() * sensitivity;
     Robot.driveSubsystem.teleopDrive(yValue, xValue);
+
   }
 
   @Override

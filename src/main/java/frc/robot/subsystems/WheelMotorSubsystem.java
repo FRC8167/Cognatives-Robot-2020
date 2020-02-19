@@ -1,19 +1,30 @@
 package frc.robot.subsystems;
 
+//import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+//import com.revrobotics.CANSparkMax;
+//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+
 
 public class WheelMotorSubsystem extends Subsystem {
   public Spark wheelMotor = new Spark(RobotMap.wheelMotorPort);
+  //public PWMSparkMax conveyerMotor = new PWMSparkMax(RobotMap.conveyerMotorPort);
 
   public void wheelControl(double wheelSpeed) {
+    //System.out.println("Test");
     wheelMotor.set(wheelSpeed);
+    //conveyerMotor.set(wheelSpeed);
+    
   }
 
   public double getSpeed() {
     return wheelMotor.getSpeed();
   }
+
+
 
 
   @Override

@@ -22,11 +22,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    //Actuator Initialize
+    Robot.oi.dumpActuator.setSpeed(1);
+    //Calibrate the Gyro
+    Robot.oi.gyro.calibrate();
+
+
     //adds color chooices to smart dashboard
-    colorChoice.setDefaultOption("Yellow", "Yellow");
-    colorChoice.addOption("Green", "Green");
-    colorChoice.addOption("Red", "Red");
-    colorChoice.addOption("Blue", "Blue");
+    colorChoice.setDefaultOption("Yellow", "Green");
+    colorChoice.addOption("Green", "Yellow");
+    colorChoice.addOption("Red", "Blue");
+    colorChoice.addOption("Blue", "Red");
     SmartDashboard.putData("Choose Your Color", colorChoice);
     SmartDashboard.updateValues();
     
@@ -58,10 +64,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-  }
+    //double angle = Robot.oi.gyro.getAngle();
+    //SmartDashboard.putNumber("Angle: ", angle);
+    //int POV = Robot.oi.stick.getPOV();
+    //SmartDashboard.putNumber("POV: ", POV);
+    }
+
 
   @Override
   public void testPeriodic() {
   }
-
 }

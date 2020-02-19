@@ -26,16 +26,22 @@ public class RobotMap {
   public static int rearRightPort = (4);
   
   public static int wheelMotorPort = (5);
-
+  public static int conveyerMotorPort = (8);
+  
   //Servos
   public static int dumpActuatorPort = (6);
-
+  public static int dumpServoPort = (7);
+  public static final int ultrasonicPort = (0);
 
   //Buttons
   public static int dumpButtonNumber = (2);
-  public static int wheelClockwiseButtonNumber = (7);
-  public static int wheelAntiClockwiseButtonNumber = (8);
+  public static int loadButtonNumber= (3); //Added by nick to make it goto the load point
+  //public static int wheelClockwiseButtonNumber = (7);
+  //public static int wheelAntiClockwiseButtonNumber = (8);
   public static int colorDetectButtonNumber = (9);
+  public static int ultrasonicSensorButtonNumber = (5);
+  //public static int servoButtonNumber = (5);
+  public static int turn90DegreesButtonNumber = (11);
 }
 
  

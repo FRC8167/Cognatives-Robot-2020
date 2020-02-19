@@ -2,35 +2,47 @@ package frc.robot;
 
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ColorChooseCommand;
 import frc.robot.commands.DumpSetCommand;
-import frc.robot.commands.WheelMotorCommand;
+import frc.robot.commands.QuickTurnCommand;
+//import frc.robot.commands.UltrasonicSensorCommand;
+//import frc.robot.commands.WheelMotorCommand;
 
 public class OI {
   public Joystick stick = new Joystick(RobotMap.joystickPort);
-
   public final I2C.Port i2cPort = I2C.Port.kOnboard;
   public final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+  public final AnalogInput ultrasonicSensor = new AnalogInput(RobotMap.ultrasonicPort);
   public Servo dumpActuator = new Servo(RobotMap.dumpActuatorPort);
-
+  public Servo dumpServo = new Servo(RobotMap.dumpServoPort);
+  public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
   public OI() {
     Button dumpButton = new JoystickButton(stick, RobotMap.dumpButtonNumber);
-    Button wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber);
-    Button wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber);
+    Button loadButton = new JoystickButton(stick, RobotMap.loadButtonNumber);//added by nick
+    //Button wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber); NIO brushless motor stuff
+    //Button wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber); ^
     Button colorDetectButton = new JoystickButton(stick, RobotMap.colorDetectButtonNumber);
+    //Button ultrasonicSensorButton = new JoystickButton(stick, RobotMap.ultrasonicSensorButtonNumber);  
+    Button turn90DegreesButton = new JoystickButton(stick, RobotMap.turn90DegreesButtonNumber);
     
     dumpButton.whenPressed(new DumpSetCommand(-1.0));
-    dumpButton.whenReleased(new DumpSetCommand(1.0));
+    dumpButton.whenReleased(new DumpSetCommand(.4));
+    loadButton.whenPressed(new DumpSetCommand(-0.4));
+    loadButton.whenReleased(new DumpSetCommand(.4));
 
-    wheelClockwiseButton.whileHeld(new WheelMotorCommand(1.0));
-    wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-1.0));
+    //wheelClockwiseButton.whileHeld(new WheelMotorCommand(.3)); //NEO brushless motor stuff
+    //wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-.3));
     colorDetectButton.whenPressed(new ColorChooseCommand());
+    turn90DegreesButton.whenPressed(new QuickTurnCommand());
   }
 
 /**

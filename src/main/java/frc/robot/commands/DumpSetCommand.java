@@ -6,7 +6,7 @@ import frc.robot.Robot;
 public class DumpSetCommand extends Command {
   double actuatorSpeed;
   
-  public DumpSetCommand(double speed) {
+  public DumpSetCommand(final double speed) {
     this.actuatorSpeed = speed;
   }
 
