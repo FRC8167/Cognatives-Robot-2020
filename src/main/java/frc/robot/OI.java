@@ -15,6 +15,7 @@ import frc.robot.commands.DumpSetCommand;
 import frc.robot.commands.QuickTurnCommand;
 //import frc.robot.commands.UltrasonicSensorCommand;
 //import frc.robot.commands.WheelMotorCommand;
+import frc.robot.commands.WheelMotorCommand;
 
 public class OI {
   public Joystick stick = new Joystick(RobotMap.joystickPort);
@@ -26,21 +27,23 @@ public class OI {
   public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
   public OI() {
+    //This is where you instantiate new buttons, the ports are just the numbers on the Joystick
     Button dumpButton = new JoystickButton(stick, RobotMap.dumpButtonNumber);
     Button loadButton = new JoystickButton(stick, RobotMap.loadButtonNumber);//added by nick
-    //Button wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber); NIO brushless motor stuff
-    //Button wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber); ^
+    Button wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber);
+    Button wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber);
     Button colorDetectButton = new JoystickButton(stick, RobotMap.colorDetectButtonNumber);
     //Button ultrasonicSensorButton = new JoystickButton(stick, RobotMap.ultrasonicSensorButtonNumber);  
     Button turn90DegreesButton = new JoystickButton(stick, RobotMap.turn90DegreesButtonNumber);
     
-    dumpButton.whenPressed(new DumpSetCommand(-1.0));
+    //This is where you tell the buttons to excecute commands
+    dumpButton.whenPressed(new DumpSetCommand(-0.9));
     dumpButton.whenReleased(new DumpSetCommand(.4));
     loadButton.whenPressed(new DumpSetCommand(-0.4));
     loadButton.whenReleased(new DumpSetCommand(.4));
 
-    //wheelClockwiseButton.whileHeld(new WheelMotorCommand(.3)); //NEO brushless motor stuff
-    //wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-.3));
+    wheelClockwiseButton.whileHeld(new WheelMotorCommand(1.0)); //NEO brushless motor stuff
+    wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-1.0));
     colorDetectButton.whenPressed(new ColorChooseCommand());
     turn90DegreesButton.whenPressed(new QuickTurnCommand());
   }

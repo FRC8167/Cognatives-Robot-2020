@@ -21,6 +21,7 @@ public class ColorMatchCommand extends Command {
 
   @Override
   protected void initialize() {
+    //Adds RGB values from ColorSensorSubsystem
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kBlueTarget);
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kGreenTarget);
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kRedTarget);
@@ -30,6 +31,7 @@ public class ColorMatchCommand extends Command {
 
   @Override
   protected void execute() {
+    
     Color detectedColor = Robot.oi.m_colorSensor.getColor();
     String colorString;
     ColorMatchResult match = Robot.colorSensorSubsystem.m_colorMatcher.matchClosestColor(detectedColor);
@@ -46,6 +48,7 @@ public class ColorMatchCommand extends Command {
       colorString = "Unknown";
     }
 
+    //Adds data to SmartDashboard
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);

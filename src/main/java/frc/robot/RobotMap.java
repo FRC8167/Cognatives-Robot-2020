@@ -15,6 +15,7 @@ package frc.robot;
  */
 public class RobotMap {
   //I have no idea why we have parentheses around the numbers, but whatever
+  //Stop judging me it looks cool -Conner
 
   //Joystick
   public static int joystickPort = (0);
@@ -26,7 +27,7 @@ public class RobotMap {
   public static int rearRightPort = (4);
   
   public static int wheelMotorPort = (5);
-  public static int conveyerMotorPort = (8);
+  //public static int conveyerMotorPort = (8);
   
   //Servos
   public static int dumpActuatorPort = (6);
@@ -34,14 +35,19 @@ public class RobotMap {
   public static final int ultrasonicPort = (0);
 
   //Buttons
-  public static int dumpButtonNumber = (2);
+  public static int dumpButtonNumber = (1);
   public static int loadButtonNumber= (3); //Added by nick to make it goto the load point
-  //public static int wheelClockwiseButtonNumber = (7);
-  //public static int wheelAntiClockwiseButtonNumber = (8);
+  public static int wheelClockwiseButtonNumber = (7);
+  public static int wheelAntiClockwiseButtonNumber = (8);
   public static int colorDetectButtonNumber = (9);
   public static int ultrasonicSensorButtonNumber = (5);
   //public static int servoButtonNumber = (5);
   public static int turn90DegreesButtonNumber = (11);
+
+  //Speed Values for QuickTurnCommand
+  public static double turnLeftValue = (-.55);
+  public static double turnRightValue = (.55);
+  public static double turn180Value = (.56);
 }
 
  

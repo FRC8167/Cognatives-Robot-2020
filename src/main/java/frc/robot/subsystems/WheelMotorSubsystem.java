@@ -14,13 +14,13 @@ public class WheelMotorSubsystem extends Subsystem {
   //public PWMSparkMax conveyerMotor = new PWMSparkMax(RobotMap.conveyerMotorPort);
 
   public void wheelControl(double wheelSpeed) {
-    //System.out.println("Test");
     wheelMotor.set(wheelSpeed);
     //conveyerMotor.set(wheelSpeed);
     
   }
 
   public double getSpeed() {
+    //Returns current speed
     return wheelMotor.getSpeed();
   }
 

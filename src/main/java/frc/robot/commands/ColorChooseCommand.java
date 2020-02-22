@@ -50,18 +50,15 @@ public class ColorChooseCommand extends Command {
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
   
-    //SmartDashboard.putNumber("Time Non Interacted", timer.get());
+    //If color equals chosen color, stop after .4 seconds (the time it takes to center the color)
     if (colorString == Robot.colorChoice.getSelected() && timer.get() <= 0.0) {
       timer.start();
-      //SmartDashboard.putNumber("Time", timer.get());
     }
     if (timer.get() > (0.4) && colorString == Robot.colorChoice.getSelected()) {
-      //SmartDashboard.putNumber("Time 3", timer.get());
       timer.stop();
       timer.reset();
       Robot.wheelMotorSubsystem.wheelControl(0.0);    }
     else if (timer.get() > 0.4 && colorString != Robot.colorChoice.getSelected()) {
-      //SmartDashboard.putNumber("Time 2", timer.get());
       timer.stop();
       timer.reset();
     }
@@ -70,6 +67,7 @@ public class ColorChooseCommand extends Command {
 
   @Override
   protected boolean isFinished() {
+    //Stops the motor
     if (Robot.wheelMotorSubsystem.getSpeed() == (0.0)){
       return true;
     }
