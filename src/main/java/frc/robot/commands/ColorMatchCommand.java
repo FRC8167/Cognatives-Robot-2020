@@ -9,18 +9,21 @@ package frc.robot.commands;
 
 import com.revrobotics.ColorMatchResult;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Robot;
 
 public class ColorMatchCommand extends Command {
+  Timer timer = new Timer();
   public ColorMatchCommand() {
     requires(Robot.colorSensorSubsystem);
   }
 
   @Override
   protected void initialize() {
+    timer.start();
     //Adds RGB values from ColorSensorSubsystem
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kBlueTarget);
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kGreenTarget);
@@ -31,6 +34,7 @@ public class ColorMatchCommand extends Command {
 
   @Override
   protected void execute() {
+    SmartDashboard.putNumber("Color Match Command", timer.get());
     
     Color detectedColor = Robot.oi.m_colorSensor.getColor();
     String colorString;
@@ -64,9 +68,13 @@ public class ColorMatchCommand extends Command {
 
   @Override
   protected void end() {
+    timer.stop();
+    timer.reset();
   }
 
   @Override
   protected void interrupted() {
+    timer.stop();
+    timer.reset();
   }
 }

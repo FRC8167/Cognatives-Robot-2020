@@ -1,5 +1,9 @@
 package frc.robot;
 
+// import edu.wpi.cscore.AxisCamera;
+// import edu.wpi.cscore.CameraServerJNI;
+// import edu.wpi.cscore.MjpegServer;
+// import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,13 +23,24 @@ public class Robot extends TimedRobot {
   public static OI oi = new OI();
 
   public static SendableChooser<String> colorChoice = new SendableChooser<String>();
+  public static SendableChooser<String> cameraChoice = new SendableChooser<String>();
+
+  //public static UsbCamera camera = new UsbCamera("Camera",0);
+  
+
+
+  //private String camera;
 
   @Override
   public void robotInit() {
+//camera.setFPS(20);
+//camera.setResolution(320, 240); //320 = width, 240 = height
     //Actuator Initialize
     Robot.oi.dumpActuator.setSpeed(1);
+    Robot.oi.cameraServo.setPosition(.1);
     //Calibrate the Gyro
     Robot.oi.gyro.calibrate();
+  
 
 
     //adds color chooices to smart dashboard
@@ -37,6 +52,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.updateValues();
     
     //starts the webcam
+    //serverOne.startAutomaticCapture();
+    //serverOne.startAutomaticCapture(0);
     CameraServer.getInstance().startAutomaticCapture();
   }
 
@@ -48,10 +65,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    if (m_timer.get() < 5.0) {
-      // drive forwards half speed
+     if (m_timer.get() > 0.0 && m_timer.get() < 1.0){
+      Robot.driveSubsystem.m_robotDrive.arcadeDrive(0, .7);
+    }
+    else if (m_timer.get() > 1.0 && m_timer.get() < 4.0){
       Robot.driveSubsystem.m_robotDrive.arcadeDrive(0.5, 0.0);
-    } else {
+    }
+    else {
       // stop robot
       Robot.driveSubsystem.m_robotDrive.stopMotor();
     }
@@ -59,17 +79,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    Robot.driveSubsystem.m_robotDrive.setExpiration(1.0);
   }
 
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    //double angle = Robot.oi.gyro.getAngle();
-    //SmartDashboard.putNumber("Angle: ", angle);
     //int POV = Robot.oi.stick.getPOV();
     //SmartDashboard.putNumber("POV: ", POV);
-    }
 
+    }
 
   @Override
   public void testPeriodic() {

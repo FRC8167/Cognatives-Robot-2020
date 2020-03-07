@@ -8,39 +8,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-//import frc.robot.subsystems.DriveSubsystem;
 
-public class UltrasonicSensorCommand extends Command {
-
-  private static final double kValueToCM = 9.77;
-  // factor to convert sensor values to a distance in CM
-
-  // proportional speed constant
-  public UltrasonicSensorCommand() {
+public class ServoCameraCommand extends Command {
+  public ServoCameraCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.driveSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    if (Robot.oi.cameraServo.getPosition() > 0.9){
+      Robot.oi.cameraServo.setPosition(0);
+    }
+    else if (Robot.oi.cameraServo.getPosition() <= .1){
+      Robot.oi.cameraServo.setPosition(1);
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double currentDistance = (Robot.oi.ultrasonicSensor.getVoltage() * 1000 / kValueToCM); //outputs in cm (not inches conner :/)
-    if (currentDistance < 0) {currentDistance = 0;}
-    SmartDashboard.putNumber("Distance CM", currentDistance);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

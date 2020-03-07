@@ -17,6 +17,7 @@ import frc.robot.RobotMap;
 
 public class QuickTurnCommand extends Command {
   double initAngle;
+  String direction;
   private Timer timer = new Timer();
   public QuickTurnCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -28,6 +29,7 @@ public class QuickTurnCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    direction = "unestablished";
     initAngle = Robot.oi.gyro.getAngle();
     timer.reset();
     timer.start();
@@ -39,10 +41,16 @@ public class QuickTurnCommand extends Command {
     //Finds what direction you want and sets the motors to turn that direction
     int pov = Robot.oi.stick.getPOV();
     if (pov == 270.000) {
-      Robot.driveSubsystem.teleopDrive(RobotMap.turnLeftValue, RobotMap.turnLeftValue);
-      Robot.driveSubsystem.teleopDrive(RobotMap.turnRightValue, RobotMap.turnRightValue);
-    } else if (pov == 180.000) {
-      Robot.driveSubsystem.teleopDrive(RobotMap.turn180Value, RobotMap.turn180Value);
+      direction = "left";
+      Robot.driveSubsystem.teleopDrive(0, RobotMap.turnLeftValue);
+    }
+    else if (pov == 90.000){
+      direction = "right";
+      Robot.driveSubsystem.teleopDrive(0, RobotMap.turnRightValue);
+    } 
+    else if (pov == 180.000) {
+      direction = "back";
+      Robot.driveSubsystem.teleopDrive(0, RobotMap.turn180Value);
     }
   }
 
@@ -53,25 +61,26 @@ public class QuickTurnCommand extends Command {
     if (timer.get() >= 2) return true;
 
     double currentAngle = (Robot.oi.gyro.getAngle());
-    double scale = 100.0;
+
+    //double scale = 100.0;
     //Rounds speed to two decimals, I know there are more efficient ways to do this but this was easy
-    double leftSpeed = Math.round(Robot.driveSubsystem.m_left.get() * scale) / scale;
-    double rightSpeed = Math.round(Robot.driveSubsystem.m_right.get() * scale) / scale;
+    //double leftSpeed = Math.round(Robot.driveSubsystem.m_left.get() * scale) / scale;
+    //double rightSpeed = Math.round(Robot.driveSubsystem.m_right.get() * scale) / scale;
 
     //Checks what direction you chose by using the speed and ends if the desired angle is met
-    if (rightSpeed == 0.56 && leftSpeed == 0.56){
+    if (direction == "back"){
       if (currentAngle >= initAngle + 125) {
         return true;
       }
     }
 
-    else if (rightSpeed == -0.55 && leftSpeed == -0.55){
+    else if (direction == "left"){
       if (currentAngle <= initAngle - 45) {
         return true;
       }
     }
 
-    else if (rightSpeed == 0.55 && leftSpeed == 0.55){
+    else if (direction == "right"){
       if (currentAngle >= initAngle + 40) {
         return true;
       }

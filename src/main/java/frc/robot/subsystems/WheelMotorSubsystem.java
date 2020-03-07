@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-//import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -11,11 +10,10 @@ import frc.robot.RobotMap;
 
 public class WheelMotorSubsystem extends Subsystem {
   public Spark wheelMotor = new Spark(RobotMap.wheelMotorPort);
-  //public PWMSparkMax conveyerMotor = new PWMSparkMax(RobotMap.conveyerMotorPort);
+  //public PWMSparkMax wheelMotor2 = new PWMSparkMax(RobotMap.conveyerMotorPort);
 
   public void wheelControl(double wheelSpeed) {
     wheelMotor.set(wheelSpeed);
-    //conveyerMotor.set(wheelSpeed);
     
   }
 

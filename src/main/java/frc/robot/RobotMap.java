@@ -27,27 +27,33 @@ public class RobotMap {
   public static int rearRightPort = (4);
   
   public static int wheelMotorPort = (5);
-  //public static int conveyerMotorPort = (8);
+  public static int colorServoPort = (9);
   
   //Servos
   public static int dumpActuatorPort = (6);
-  public static int dumpServoPort = (7);
   public static final int ultrasonicPort = (0);
+  public static int cameraServoPort = (7);
 
   //Buttons
   public static int dumpButtonNumber = (1);
   public static int loadButtonNumber= (3); //Added by nick to make it goto the load point
+  public static int reverseButtonNumber = (4);
+  public static int ultrasonicSensorButtonNumber = (5);
   public static int wheelClockwiseButtonNumber = (7);
   public static int wheelAntiClockwiseButtonNumber = (8);
   public static int colorDetectButtonNumber = (9);
-  public static int ultrasonicSensorButtonNumber = (5);
   //public static int servoButtonNumber = (5);
   public static int turn90DegreesButtonNumber = (11);
+  public static int servoCameraButtonNumber = (10);
 
   //Speed Values for QuickTurnCommand
-  public static double turnLeftValue = (-.55);
-  public static double turnRightValue = (.55);
-  public static double turn180Value = (.56);
+  public static double turnLeftValue = (-.75);
+  public static double turnRightValue = (.75);
+  public static double turn180Value = (.76);
+
+  public static final double kValueToCM = 9.77;
+  public static final double kValueToInches = .125;
 }
+
 
  

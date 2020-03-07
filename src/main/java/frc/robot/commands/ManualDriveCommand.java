@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
+
 public class ManualDriveCommand extends Command {
   public ManualDriveCommand() {
     requires(Robot.driveSubsystem);
@@ -20,7 +21,12 @@ public class ManualDriveCommand extends Command {
     //getY is negative because the joystick reads backwards
     double yValue = -Robot.oi.stick.getY() * sensitivity;
     double xValue = Robot.oi.stick.getX() * sensitivity;
-    Robot.driveSubsystem.teleopDrive(yValue, xValue);
+    if (Robot.oi.reverseButton.get() == true) {
+      Robot.driveSubsystem.teleopDrive(-yValue, xValue);
+    }
+    else {
+      Robot.driveSubsystem.teleopDrive(yValue, xValue);
+    }
 
   }
 

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ColorChooseCommand;
 import frc.robot.commands.DumpSetCommand;
 import frc.robot.commands.QuickTurnCommand;
+import frc.robot.commands.ServoCameraCommand;
 //import frc.robot.commands.UltrasonicSensorCommand;
 //import frc.robot.commands.WheelMotorCommand;
 import frc.robot.commands.WheelMotorCommand;
@@ -23,8 +24,12 @@ public class OI {
   public final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   public final AnalogInput ultrasonicSensor = new AnalogInput(RobotMap.ultrasonicPort);
   public Servo dumpActuator = new Servo(RobotMap.dumpActuatorPort);
-  public Servo dumpServo = new Servo(RobotMap.dumpServoPort);
   public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+  public Servo colorServo = new Servo(RobotMap.colorServoPort);
+  public Servo cameraServo = new Servo(RobotMap.cameraServoPort);
+
+  //This button is outside of public OI() becuase it doesn't excecute a command, but is checked in ManualDriveCommand
+  public Button reverseButton = new JoystickButton(stick, RobotMap.reverseButtonNumber);
 
   public OI() {
     //This is where you instantiate new buttons, the ports are just the numbers on the Joystick
@@ -32,9 +37,11 @@ public class OI {
     Button loadButton = new JoystickButton(stick, RobotMap.loadButtonNumber);//added by nick
     Button wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber);
     Button wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber);
-    Button colorDetectButton = new JoystickButton(stick, RobotMap.colorDetectButtonNumber);
+    Button colorChooseButton = new JoystickButton(stick, RobotMap.colorDetectButtonNumber);
     //Button ultrasonicSensorButton = new JoystickButton(stick, RobotMap.ultrasonicSensorButtonNumber);  
     Button turn90DegreesButton = new JoystickButton(stick, RobotMap.turn90DegreesButtonNumber);
+    Button servoCameraButton = new JoystickButton(stick, RobotMap.servoCameraButtonNumber);
+  
     
     //This is where you tell the buttons to excecute commands
     dumpButton.whenPressed(new DumpSetCommand(-0.9));
@@ -42,10 +49,15 @@ public class OI {
     loadButton.whenPressed(new DumpSetCommand(-0.4));
     loadButton.whenReleased(new DumpSetCommand(.4));
 
-    wheelClockwiseButton.whileHeld(new WheelMotorCommand(1.0)); //NEO brushless motor stuff
-    wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-1.0));
-    colorDetectButton.whenPressed(new ColorChooseCommand());
+    wheelClockwiseButton.whileHeld(new WheelMotorCommand(.35)); //NEO brushless motor stuff
+    wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-.35));
+    colorChooseButton.whenReleased(new ColorChooseCommand());
     turn90DegreesButton.whenPressed(new QuickTurnCommand());
+
+    servoCameraButton.whenPressed(new ServoCameraCommand());
+
+
+
   }
 
 /**
