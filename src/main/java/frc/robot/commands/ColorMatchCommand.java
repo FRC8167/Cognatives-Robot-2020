@@ -73,13 +73,11 @@ public class ColorMatchCommand extends Command {
 
   @Override
   protected void end() {
-    timer.stop();
-    timer.reset();
+    
   }
 
   @Override
   protected void interrupted() {
-    timer.stop();
-    timer.reset();
+
   }
 }
