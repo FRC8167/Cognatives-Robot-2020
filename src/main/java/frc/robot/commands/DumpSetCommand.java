@@ -7,7 +7,6 @@ import frc.robot.Robot;
 
 public class DumpSetCommand extends Command {
   double actuatorSpeed;
-  Timer timer = new Timer();
   
   public DumpSetCommand(final double speed) {
     //Speed = position for actuators 
@@ -19,12 +18,11 @@ public class DumpSetCommand extends Command {
     //I do not know what setBounds does, but you need it
     Robot.oi.dumpActuator.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     Robot.oi.dumpActuator.setSpeed(this.actuatorSpeed);
-    timer.start();
   }
 
   @Override
   protected void execute() {
-    SmartDashboard.putNumber("Dump Set Command", timer.get());
+    
   }
 
   @Override
@@ -34,13 +32,11 @@ public class DumpSetCommand extends Command {
 
   @Override
   protected void end() {
-    timer.stop();
-    timer.reset();
+    
   }
   
   @Override
   protected void interrupted() {
-    timer.stop();
-    timer.reset();
+    
   }
 }

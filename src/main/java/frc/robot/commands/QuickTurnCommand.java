@@ -18,7 +18,7 @@ import frc.robot.RobotMap;
 public class QuickTurnCommand extends Command {
   double initAngle;
   String direction;
-  private Timer timer = new Timer();
+  private static Timer timer = new Timer();
   public QuickTurnCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -100,5 +100,6 @@ public class QuickTurnCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    
   }
 }
