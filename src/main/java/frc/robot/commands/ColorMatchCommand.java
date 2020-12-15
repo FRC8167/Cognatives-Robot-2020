@@ -16,14 +16,20 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Robot;
 
 public class ColorMatchCommand extends Command {
-  Timer timer = new Timer();
+  private enum Colors {
+    Unknown,
+    Red, 
+    Yellow, 
+    Blue, 
+    Green
+  };
+
   public ColorMatchCommand() {
     requires(Robot.colorSensorSubsystem);
   }
 
   @Override
   protected void initialize() {
-    timer.start();
     //Adds RGB values from ColorSensorSubsystem
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kBlueTarget);
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kGreenTarget);
@@ -34,22 +40,21 @@ public class ColorMatchCommand extends Command {
 
   @Override
   protected void execute() {
-    SmartDashboard.putNumber("Color Match Command", timer.get());
     
     Color detectedColor = Robot.oi.m_colorSensor.getColor();
-    String colorString;
+    Colors color;
     ColorMatchResult match = Robot.colorSensorSubsystem.m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == Robot.colorSensorSubsystem.kBlueTarget) {
-      colorString = "Blue";
+      color = Colors.Blue;
     } else if (match.color == Robot.colorSensorSubsystem.kRedTarget) {
-      colorString = "Red";
+      color = Colors.Red;
     } else if (match.color ==Robot.colorSensorSubsystem. kGreenTarget) {
-      colorString = "Green";
+      color = Colors.Green;
     } else if (match.color == Robot.colorSensorSubsystem.kYellowTarget) {
-      colorString = "Yellow";
+      color = Colors.Yellow;
     } else {
-      colorString = "Unknown";
+      color = Colors.Unknown;
     }
 
     //Adds data to SmartDashboard
@@ -57,7 +62,7 @@ public class ColorMatchCommand extends Command {
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
-    SmartDashboard.putString("Detected Color", colorString);
+    SmartDashboard.putString("Detected Color", color.toString());
 
   }
 
