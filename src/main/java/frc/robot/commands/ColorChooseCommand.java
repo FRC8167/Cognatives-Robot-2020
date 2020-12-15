@@ -26,26 +26,21 @@ public class ColorChooseCommand extends Command {
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kGreenTarget);
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kRedTarget);
     Robot.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.colorSensorSubsystem.kYellowTarget);   
-    Robot.oi.colorServo.setPosition(.80);
+    Robot.oi.colorServo.setPosition(.70);
     startTimer.reset();
     startTimer.start();
   }
 
   @Override
   protected void execute() {
-    if (startTimer.get() >= 1.5) {
+    if (startTimer.get() >= 0.75) {
       if (endTimer.get() <= 0.0) {
         if (safetyTimer.get() == 0.0) safetyTimer.start();
         Color detectedColor = Robot.oi.m_colorSensor.getColor();
         String colorString;
         ColorMatchResult match = Robot.colorSensorSubsystem.m_colorMatcher.matchClosestColor(detectedColor);
 
-        if (Robot.colorChoice.getSelected()=="Red" || Robot.colorChoice.getSelected()=="Blue") {
-          Robot.wheelMotorSubsystem.wheelControl(0.28);
-        } else {
-          Robot.wheelMotorSubsystem.wheelControl(0.35);
-        }
-        
+        Robot.wheelMotorSubsystem.wheelControl(0.35);
 
         if (match.color == Robot.colorSensorSubsystem.kBlueTarget) {
           colorString = "Blue";
@@ -68,12 +63,12 @@ public class ColorChooseCommand extends Command {
         
         if (colorString == Robot.colorChoice.getSelected()) {
           safetyTimer.stop();
-          if (safetyTimer.get() < .1) {
+          if (safetyTimer.get() < .3) {
             Robot.wheelMotorSubsystem.wheelControl(0.0);
-            endTimer.start();  
+            endTimer.start();
           }
           else {
-            Robot.wheelMotorSubsystem.wheelControl(0.0);
+            Robot.wheelMotorSubsystem.wheelControl(-0.15);
             endTimer.start();
           }
         }
@@ -90,12 +85,12 @@ public class ColorChooseCommand extends Command {
   protected boolean isFinished() {
     //Stops the motor
     if (startTimer.get() > 1.5){
-      if (Robot.wheelMotorSubsystem.getSpeed() == (0.0)) {
+      if (Robot.wheelMotorSubsystem.getSpeed() == (0.0))  {
         endTimer.stop();
         endTimer.reset();
         return true;
       }
-      else if (Robot.wheelMotorSubsystem.getSpeed() == (-0.3) && endTimer.get() > .30){
+      else if (Robot.wheelMotorSubsystem.getSpeed() == (-0.15) && endTimer.get() > .2){
         endTimer.stop();
         endTimer.reset();
         return true;

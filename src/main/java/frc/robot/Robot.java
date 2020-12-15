@@ -17,13 +17,14 @@ import frc.robot.subsystems.WheelMotorSubsystem;
 public class Robot extends TimedRobot {
 
   private final Timer m_timer = new Timer();
+  
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ColorSensorSubsystem colorSensorSubsystem = new ColorSensorSubsystem();
   public static WheelMotorSubsystem wheelMotorSubsystem = new WheelMotorSubsystem();
   public static OI oi = new OI();
 
   public static SendableChooser<String> colorChoice = new SendableChooser<String>();
-  public static SendableChooser<String> cameraChoice = new SendableChooser<String>();
+  //public static SendableChooser<String> cameraChoice = new SendableChooser<String>();
 
   //public static UsbCamera camera = new UsbCamera("Camera",0);
   
@@ -33,16 +34,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-//camera.setFPS(20);
-//camera.setResolution(320, 240); //320 = width, 240 = height
-    //Actuator Initialize
-    Robot.oi.dumpActuator.setSpeed(1);
-    Robot.oi.cameraServo.setPosition(.1);
+    //camera.setFPS(20);
+
     //Calibrate the Gyro
     Robot.oi.gyro.calibrate();
-  
 
-
+    //camera.setResolution(320, 240); //320 = width, 240 = height
+    //Actuator Initialize
+    Robot.oi.dumpActuator.setSpeed(1);
+    Robot.oi.cameraServo.setPosition(1);
+/*
     //adds color chooices to smart dashboard
     colorChoice.setDefaultOption("Yellow", "Green");
     colorChoice.addOption("Green", "Yellow");
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
     //starts the webcam
     //serverOne.startAutomaticCapture();
     //serverOne.startAutomaticCapture(0);
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();//*/
   }
 
   @Override
@@ -65,12 +66,27 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-     if (m_timer.get() > 0.0 && m_timer.get() < 1.0){
-      Robot.driveSubsystem.m_robotDrive.arcadeDrive(0, .7);
-    }
-    else if (m_timer.get() > 1.0 && m_timer.get() < 4.0){
-      Robot.driveSubsystem.m_robotDrive.arcadeDrive(0.5, 0.0);
-    }
+    if (m_timer.get() < 2.5) {
+      //System.out.println("here1");
+      Robot.driveSubsystem.m_robotDrive.arcadeDrive(0.75, 0.0);
+     }
+    // else if (m_timer.get() >= 4.0 && m_timer.get() < 4.5) {
+    //   Robot.oi.dumpActuator.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+    //   Robot.oi.dumpActuator.setSpeed(-0.9);
+    // }
+    // else if (m_timer.get() >= 4.5 && m_timer.get() < 5.0) {
+    //   System.out.println("here3");
+    //   Robot.driveSubsystem.m_robotDrive.arcadeDrive(0.7, 0.0);
+    // }
+    // else if (m_timer.get() >= 5.0 && m_timer.get() < 12.5) {
+    //   Robot.driveSubsystem.m_robotDrive.stopMotor();sm
+    // }
+    // else if (m_timer.get() >= 12.5 && m_timer.get() < 14.0){
+    //   Robot.driveSubsystem.m_robotDrive.arcadeDrive(-0.7, 0.0);
+    // }
+    // else if (m_timer.get() >= 14.0 && m_timer.get() < 15.0) {
+    //   Robot.driveSubsystem.m_robotDrive.arcadeDrive(0.0, 0.65);
+    // }
     else {
       // stop robot
       Robot.driveSubsystem.m_robotDrive.stopMotor();
@@ -79,6 +95,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    //Robot.oi.dumpActuator.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+    //Robot.oi.dumpActuator.setSpeed(0.6);
     Robot.driveSubsystem.m_robotDrive.setExpiration(1.0);
   }
 

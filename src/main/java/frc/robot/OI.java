@@ -45,19 +45,19 @@ public class OI {
     
     //This is where you tell the buttons to excecute commands
     dumpButton.whenPressed(new DumpSetCommand(-0.9));
-    dumpButton.whenReleased(new DumpSetCommand(.4));
-    loadButton.whenPressed(new DumpSetCommand(-0.4));
-    loadButton.whenReleased(new DumpSetCommand(.4));
+    dumpButton.whenReleased(new DumpSetCommand(.6));
+    loadButton.whenPressed(new DumpSetCommand(-0.5));
+    loadButton.whenReleased(new DumpSetCommand(.6));
 
-    wheelClockwiseButton.whileHeld(new WheelMotorCommand(.35)); //NEO brushless motor stuff
-    wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-.35));
+    wheelClockwiseButton.whileHeld(new WheelMotorCommand(.40)); //NEO brushless motor stuff
+    wheelAntiClockwiseButton.whileHeld(new WheelMotorCommand(-.40));
     colorChooseButton.whenReleased(new ColorChooseCommand());
     turn90DegreesButton.whenPressed(new QuickTurnCommand());
 
     servoCameraButton.whenPressed(new ServoCameraCommand());
 
 
-
+ 
   }
 
 /**

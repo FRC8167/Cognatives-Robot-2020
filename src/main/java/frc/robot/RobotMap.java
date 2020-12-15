@@ -26,8 +26,8 @@ public class RobotMap {
   public static int frontRightPort = (3);
   public static int rearRightPort = (4);
   
-  public static int wheelMotorPort = (5);
-  public static int colorServoPort = (9);
+  public static int wheelMotorPort = (9);
+  public static int colorServoPort = (5);
   
   //Servos
   public static int dumpActuatorPort = (6);
