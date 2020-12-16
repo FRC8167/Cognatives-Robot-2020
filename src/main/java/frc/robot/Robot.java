@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
 		this.driveSubsystem = new DriveSubsystem();
 		this.colorSensorSubsystem = new ColorSensorSubsystem();
 		this.wheelMotorSubsystem = new WheelMotorSubsystem();
-		this.oi = new OI(); //TODO: maybe rename OI to something better?
+		this.oi = new OI(); //TODO: maybe rename OI to something better? maybe just un-abbreviate it idk
 		this.colorChoice = new SendableChooser<String>();
 		this.camera = new UsbCamera("crappy webcam on slot 0", 0);
 	}
@@ -69,13 +69,13 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void robotInit() {
+		//TODO: should this just go in the constructor? or should the constructor go in this? having both seems redundant
 		//Calibrate the Gyro
 		/* 
 		wow what an incredibly helpful comment thank 
 		you so much i would have no idea what this 
 		did if that wasnt there
 		*/
-		Robot.robotInstance = this;
 		
 		this.oi.gyro.calibrate();
 		

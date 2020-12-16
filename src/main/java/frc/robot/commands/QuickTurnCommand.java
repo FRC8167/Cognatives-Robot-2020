@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
+//TODO: completely redo this whole thing
 public class QuickTurnCommand extends Command {
 	double initAngle;
 	String direction;

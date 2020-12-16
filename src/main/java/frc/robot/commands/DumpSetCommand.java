@@ -10,6 +10,7 @@ public class DumpSetCommand extends Command {
 	
 	public DumpSetCommand(final double speed) {
 		//Speed = position for actuators 
+		//TODO: why tf is 'speed' actually the position? who came up with THAT genius idea?
 		this.actuatorSpeed = speed;
 	}
 	

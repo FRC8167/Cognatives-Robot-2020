@@ -13,6 +13,7 @@ public class WheelMotorSubsystem extends Subsystem {
 	
 	//TODO: rename, i dont like this method name
 	public void wheelControl(double wheelSpeed) {
+		//TODO: what are the units in wheelSpeed???
 		wheelMotor.set(wheelSpeed);	
 	}
 	

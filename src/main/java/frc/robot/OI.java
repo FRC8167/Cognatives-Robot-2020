@@ -1,7 +1,6 @@
 package frc.robot;
 
 import com.revrobotics.ColorSensorV3;
-
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.I2C;
@@ -9,14 +8,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ColorChooseCommand;
-import frc.robot.commands.DumpSetCommand;
-import frc.robot.commands.QuickTurnCommand;
-import frc.robot.commands.ServoCameraCommand;
-//import frc.robot.commands.UltrasonicSensorCommand;
-//import frc.robot.commands.WheelMotorCommand;
-import frc.robot.commands.WheelMotorCommand;
+
+import frc.robot.commands.*;
 
 public class OI {
 	public Joystick stick = new Joystick(RobotMap.joystickPort);
@@ -29,12 +22,13 @@ public class OI {
 	public Servo cameraServo = new Servo(RobotMap.cameraServoPort);
 	
 	//This button is outside of public OI() becuase it doesn't excecute a command, but is checked in ManualDriveCommand
+	//TODO: what is this? should this be here?
 	public Button reverseButton = new JoystickButton(stick, RobotMap.reverseButtonNumber);
 	
 	public OI() {
 		//This is where you instantiate new buttons, the ports are just the numbers on the Joystick
 		Button dumpButton = new JoystickButton(stick, RobotMap.dumpButtonNumber);
-		Button loadButton = new JoystickButton(stick, RobotMap.loadButtonNumber);//added by nick
+		Button loadButton = new JoystickButton(stick, RobotMap.loadButtonNumber);//added by nick (thanks nick -tyler)
 		Button wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber);
 		Button wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber);
 		Button colorChooseButton = new JoystickButton(stick, RobotMap.colorDetectButtonNumber);

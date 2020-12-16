@@ -17,6 +17,7 @@ public class RobotMap {
 	//I have no idea why we have parentheses around the numbers, but whatever
 	//Stop judging me it looks cool -Conner
 	//TODO: remove parenthesis, conner is not here -Tyler
+	//TODO: make these all final, maybe even into separate enums or sm
 	
 	//Joystick
 	public static int joystickPort = (0);
@@ -37,9 +38,9 @@ public class RobotMap {
 	
 	//Buttons
 	public static int dumpButtonNumber = (1);
-	public static int loadButtonNumber= (3); //Added by nick to make it goto the load point
+	public static int loadButtonNumber = (3); //Added by nick to make it goto the load point
 	public static int reverseButtonNumber = (4);
-	public static int ultrasonicSensorButtonNumber = (5);
+	public static int ultrasonicSensorButtonNumber = (5); //TODO: do we need this? didnt the UltS break?
 	public static int wheelClockwiseButtonNumber = (7);
 	public static int wheelAntiClockwiseButtonNumber = (8);
 	public static int colorDetectButtonNumber = (9);

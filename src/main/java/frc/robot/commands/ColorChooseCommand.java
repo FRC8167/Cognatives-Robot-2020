@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.commands.util.Colors;
 import frc.robot.Robot;
 
+//TODO: kill it with fire
 public class ColorChooseCommand extends Command {
 	//TODO: use a damn constructor
 	private static Timer timer = new Timer();

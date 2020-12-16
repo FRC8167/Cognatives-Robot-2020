@@ -5,18 +5,21 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotMap;
 import frc.robot.commands.ManualDriveCommand;
+import frc.robot.RobotMap;
 
 public class DriveSubsystem extends Subsystem {
+	//TODO: rename these variables, there will be no underscores in MY good christian java variable names
 	//Establish Motor Control Methods
-	public SpeedController m_frontLeft = new PWMVictorSPX(RobotMap.frontLeftPort);
-	public SpeedController m_rearLeft = new PWMVictorSPX(RobotMap.rearLeftPort);
-	public SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft, m_rearLeft);
+	private SpeedController m_frontLeft = new PWMVictorSPX(RobotMap.frontLeftPort);
+	private SpeedController m_rearLeft = new PWMVictorSPX(RobotMap.rearLeftPort);
 	
-	public SpeedController m_frontRight = new PWMVictorSPX(RobotMap.frontRightPort);
-	public SpeedController m_rearRight = new PWMVictorSPX(RobotMap.rearRightPort);
+	private SpeedController m_frontRight = new PWMVictorSPX(RobotMap.frontRightPort);
+	private SpeedController m_rearRight = new PWMVictorSPX(RobotMap.rearRightPort);
+	
+	//group each side's motors together and use those
+	//TODO: do we need these public? they shouldnt be directly accessed outside of the DifferentialDrive
+	public SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft, m_rearLeft);
 	public SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight, m_rearRight);
 	
 	//Instate Differential Drive
