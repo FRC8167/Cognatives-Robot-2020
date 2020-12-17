@@ -10,10 +10,9 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.commands.util.Colors;
 import frc.robot.Robot;
 
-//TODO: kill it with fire
+//TODO: kill it with fire, WHY ARE THERE LIKE 5 TIMERS THOSE USE CPU THREADS
 public class ColorChooseCommand extends Command {
 	//TODO: use a damn constructor
-	private static Timer timer = new Timer();
 	private static Timer safetyTimer = new Timer();
 	private static Timer startTimer = new Timer();
 	private static Timer endTimer = new Timer();
@@ -24,7 +23,6 @@ public class ColorChooseCommand extends Command {
 	
 	@Override
 	protected void initialize() {
-		timer.start();
 		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kBlueTarget);
 		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kGreenTarget);
 		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kRedTarget);
@@ -107,13 +105,10 @@ public class ColorChooseCommand extends Command {
 		startTimer.stop();
 		safetyTimer.stop();
 		safetyTimer.reset();
-		timer.stop();
-		timer.reset();
 	}
 
 	@Override
 	protected void interrupted() {
-		timer.stop();
-		timer.reset();
+		
 	}
 }
