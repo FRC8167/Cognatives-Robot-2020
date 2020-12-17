@@ -24,7 +24,6 @@ public class QuickTurnCommand extends Command {
 	public QuickTurnCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		//this.initAngle = initAngle;
 		requires(Robot.robotInstance.driveSubsystem);
 	}
 
