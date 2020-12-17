@@ -18,8 +18,9 @@ import frc.robot.RobotMap;
 //TODO: completely redo this whole thing
 public class QuickTurnCommand extends Command {
 	double initAngle;
-	String direction;
+	int direction;
 	private static Timer timer = new Timer();
+	
 	public QuickTurnCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -30,60 +31,45 @@ public class QuickTurnCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		direction = "unestablished";
 		initAngle = Robot.robotInstance.oi.gyro.getAngle();
-		timer.reset();
 		timer.start();
 	}
-
+	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-	//Finds what direction you want and sets the motors to turn that direction
-	//TODO: WHY ARE THERE STRINGS??? GET RID OF THE STRINGS AND USE AN ENUM
-		int pov = Robot.robotInstance.oi.stick.getPOV();
-		if (pov == 270.000) {
-			direction = "left";
-			Robot.robotInstance.driveSubsystem.teleopDrive(0, RobotMap.turnLeftValue);
-		}
-		else if (pov == 90.000){
-			direction = "right";
+		//Finds what direction you want and sets the motors to turn that direction
+		
+		//NOTE: by default (not pressed) the pov is set to -1
+		direction = Robot.robotInstance.oi.stick.getPOV();
+		
+		if (direction == 0) {
+			// how would you 'quickturn forwards'?
+		} else if (direction == 90) {
 			Robot.robotInstance.driveSubsystem.teleopDrive(0, RobotMap.turnRightValue);
-		} 
-		else if (pov == 180.000) {
-			direction = "back";
+		} else if (direction == 180) {
 			Robot.robotInstance.driveSubsystem.teleopDrive(0, RobotMap.turn180Value);
+		} else if (direction == 270) {
+			Robot.robotInstance.driveSubsystem.teleopDrive(0, RobotMap.turnLeftValue);
+		} else {
+			// this is the default case, if we want to do something when the pov stick isnt moved it goes here
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		//If the code runs for two seconds, end
-		if (timer.get() >= 2) return true;
+		//If the code has been running for more than two seconds, stop
+		if (timer.get() >= 2.0) return true;
 		
-		double currentAngle = (Robot.robotInstance.oi.gyro.getAngle());
+		//get the current angle of the robot
+		double currentAngle = Robot.robotInstance.oi.gyro.getAngle();
 		
 		//Checks what direction you chose by using the speed and ends if the desired angle is met
-		//TODO: MORE STRINGS
-		if (direction == "back"){
-			if (currentAngle >= initAngle + 125) {
-				return true;
-			}
-		}
-		
-		else if (direction == "left"){
-			if (currentAngle <= initAngle - 45) {
-				return true;
-			}
-		}
-		
-		else if (direction == "right"){
-			if (currentAngle >= initAngle + 40) {
-				return true;
-			}
-		}
-		return false;
+		//TODO: test to make sure this still works
+		return	  (direction == 90  && currentAngle >= initAngle + 40 )
+				||(direction == 180 && currentAngle >= initAngle + 125)
+				||(direction == 270 && currentAngle <= initAngle - 45 );
 	}
 	
 	// Called once after isFinished returns true
@@ -92,6 +78,7 @@ public class QuickTurnCommand extends Command {
 		//Returns motors to stopped and ends the timer
 		Robot.robotInstance.driveSubsystem.teleopDrive(0, 0);		
 		timer.stop();
+		timer.reset(); //idk if this is necessary
 	}
 	
 	// Called when another command which requires one or more of the same

@@ -25,9 +25,9 @@ public class DriveSubsystem extends Subsystem {
 	//Instate Differential Drive
 	public DifferentialDrive m_robotDrive = new DifferentialDrive(m_left, m_right);
 	
-	public void teleopDrive(double yValue, double xValue) {
-		//TODO: use better parameter names, how tf is "xValue" a good variable name
-		m_robotDrive.arcadeDrive(yValue, xValue);
+	//drive (is this even necessary?)
+	public void teleopDrive(double forwardSpeed, double rotationSpeed) {
+		m_robotDrive.arcadeDrive(forwardSpeed, rotationSpeed);
 	}
 	
 	@Override
