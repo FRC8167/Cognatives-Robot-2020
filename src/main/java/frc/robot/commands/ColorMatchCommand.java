@@ -9,11 +9,10 @@ package frc.robot.commands;
 
 import com.revrobotics.ColorMatchResult;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.commands.util.Colors;
+import frc.robot.util.Colors;
 import frc.robot.Robot;
 
 //TODO: yes
@@ -33,7 +32,7 @@ public class ColorMatchCommand extends Command {
 	
 	@Override
 	protected void execute() {
-		Color detectedColor = Robot.robotInstance.oi.m_colorSensor.getColor();
+		Color detectedColor = Robot.robotInstance.outputs.m_colorSensor.getColor();
 		Colors color;
 		ColorMatchResult match = Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.matchClosestColor(detectedColor);
 
@@ -57,7 +56,7 @@ public class ColorMatchCommand extends Command {
 		SmartDashboard.putString("Detected Color", color.toString());
 
 	}
-
+	
 	@Override
 	protected boolean isFinished() {
 		return false;

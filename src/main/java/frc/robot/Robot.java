@@ -13,19 +13,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.WheelMotorSubsystem;
+import frc.robot.subsystems.ColorWheelMotorSubsystem;
 
 public class Robot extends TimedRobot {
-	public static Robot robotInstance; //TODO: add some sort of getInstance (or getRobot) method for this
+	//TODO: add some sort of getInstance (or getRobot) method for this THAT DOESNT GET FLAGGED AS A FUCKING MEMORY LEAK AGHHHH
+	public static Robot robotInstance;
 	
 	public final Timer autonomousTimer;
 	public final DriveSubsystem driveSubsystem;
 	public final ColorSensorSubsystem colorSensorSubsystem;
-	public final WheelMotorSubsystem wheelMotorSubsystem;
+	public final ColorWheelMotorSubsystem colorWheelMotorSubsystem;
 	public final SendableChooser<String> colorChoice;
 	public final UsbCamera camera;
-	public final OI oi;
+	public final OI outputs;
 	
+	/**
+	 * Constructs a Robot instance, and sets the static Robot.robotInstance variable to it.
+	 * 
+	 * @throws InstantiationException if there is already a robot instance created
+	 */
 	Robot() {
 		// calls the TimedRobot constructor with 0.02 seconds between periodic methods, DO NOT CHANGE 0.02!
 		super(0.02d);
@@ -33,7 +39,7 @@ public class Robot extends TimedRobot {
 		// checks if a Robot() has already been made
 		if (robotInstance == null) robotInstance = this;
 		else {
-			//TODO: throw an error here or something
+			//TODO: how to throw an InstantiationException here
 			System.out.println("CRITICAL ERROR: there has already been a Robot() instantiated!");
 		}
 		
@@ -41,13 +47,13 @@ public class Robot extends TimedRobot {
 		this.autonomousTimer = new Timer();
 		this.driveSubsystem = new DriveSubsystem();
 		this.colorSensorSubsystem = new ColorSensorSubsystem();
-		this.wheelMotorSubsystem = new WheelMotorSubsystem();
-		this.oi = new OI(); //TODO: maybe rename OI to something better? maybe just un-abbreviate it idk
+		this.colorWheelMotorSubsystem = new ColorWheelMotorSubsystem();
+		this.outputs = new OI(); //TODO: maybe rename OI to something better? maybe just un-abbreviate it idk
 		this.colorChoice = new SendableChooser<String>();
 		this.camera = new UsbCamera("crappy webcam on slot 0", 0);
 		
 		// i dont know what this does but it is important, dont remove this
-		this.oi.dumpActuator.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+		this.outputs.dumpActuator.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
 	}
 	
 	private void cameraInit() {
@@ -56,8 +62,8 @@ public class Robot extends TimedRobot {
 		CameraServer.getInstance().startAutomaticCapture();
 	}
 	private void actuatorInit() {
-		this.oi.dumpActuator.setSpeed(1);
-		this.oi.cameraServo.setPosition(1);
+		this.outputs.dumpActuator.setSpeed(1);
+		this.outputs.cameraServo.setPosition(1);
 	}
 	private void colorchoicesInit() {
 		//adds color chooices to smart dashboard
@@ -79,7 +85,7 @@ public class Robot extends TimedRobot {
 		you so much i would have no idea what this 
 		did if that wasnt there
 		*/
-		this.oi.gyro.calibrate();
+		this.outputs.gyro.calibrate();
 		
 		cameraInit();
 		actuatorInit();
@@ -96,34 +102,34 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousPeriodic() {
-		//TODO: use the command abstraction, don't directly set all of this stuff
+		//TODO: use the command abstraction, don't directly set all of this stuff, or at least the robotDifferentialDrive.drive()
 		if (autonomousTimer.get() < 2.5) {
 			//drive forward at 0.75x speed for 2.5 seconds
-			this.driveSubsystem.m_robotDrive.arcadeDrive(0.75, 0.0);
+			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.75, 0.0);
 		} else if (autonomousTimer.get() >= 4.0 && autonomousTimer.get() < 4.5) {
 			//TODO: why is there a 1.5 second gap in the code here?
 			//dump the balls into the hole? idk
-			this.oi.dumpActuator.setSpeed(-0.9);
+			this.outputs.dumpActuator.setSpeed(-0.9);
 		} else if (autonomousTimer.get() >= 4.5 && autonomousTimer.get() < 5.0) {
 			//TODO: figure out wtf this stuff does
-			this.driveSubsystem.m_robotDrive.arcadeDrive(0.7, 0.0);
+			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.7, 0.0);
 		} else if (autonomousTimer.get() >= 5.0 && autonomousTimer.get() < 12.5) {
-			this.driveSubsystem.m_robotDrive.stopMotor();
+			this.driveSubsystem.robotDifferentialDrive.stopMotor();
 		} else if (autonomousTimer.get() >= 12.5 && autonomousTimer.get() < 14.0){
-			this.driveSubsystem.m_robotDrive.arcadeDrive(-0.7, 0.0);
+			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(-0.7, 0.0);
 		} else if (autonomousTimer.get() >= 14.0 && autonomousTimer.get() < 15.0) {
-			this.driveSubsystem.m_robotDrive.arcadeDrive(0.0, 0.65);
+			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.0, 0.65);
 		} else {
 			// stops the robot
-			this.driveSubsystem.m_robotDrive.stopMotor();
+			this.driveSubsystem.robotDifferentialDrive.stopMotor();
 		}
 	}
 	
 	
 	@Override
 	public void teleopInit() {
-		this.oi.dumpActuator.setSpeed(0.6);
-		this.driveSubsystem.m_robotDrive.setExpiration(1.0);
+		this.outputs.dumpActuator.setSpeed(0.6);
+		this.driveSubsystem.robotDifferentialDrive.setExpiration(1.0);
 	}
 	
 	@Override

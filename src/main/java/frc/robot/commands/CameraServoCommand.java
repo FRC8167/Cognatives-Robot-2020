@@ -10,43 +10,39 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-//TODO: rename to CameraServo
-public class ServoCameraCommand extends Command {
-	public ServoCameraCommand() {
-		//TODO: add this blurb to the example command
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+public class CameraServoCommand extends Command {
+	/**
+	 * Creates a new CameraServoCommand, which toggles the current camera direction.
+	 */
+	public CameraServoCommand() {
+		
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if (Robot.robotInstance.oi.cameraServo.getPosition() > 0.9){
-			Robot.robotInstance.oi.cameraServo.setPosition(0);
+		//TODO: make a camera subsystem
+		if (Robot.robotInstance.outputs.cameraServo.getPosition() > 0.9){
+			Robot.robotInstance.outputs.cameraServo.setPosition(0);
 		}
-		else if (Robot.robotInstance.oi.cameraServo.getPosition() <= .1){
-			Robot.robotInstance.oi.cameraServo.setPosition(1);
+		else if (Robot.robotInstance.outputs.cameraServo.getPosition() <= .1){
+			Robot.robotInstance.outputs.cameraServo.setPosition(1);
 		}
 	}
 	
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		return true;
 	}
 	
-	// Called once after isFinished returns true
 	@Override
 	protected void end() {
 	}
 	
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
 	}

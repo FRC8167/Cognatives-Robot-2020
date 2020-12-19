@@ -1,4 +1,4 @@
-package frc.robot.commands.util;
+package frc.robot.util;
 
 public enum Colors {
 	Unknown,

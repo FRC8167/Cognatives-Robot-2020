@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
-import frc.robot.commands.util.Colors;
+import frc.robot.util.Colors;
 import frc.robot.Robot;
 
 //TODO: kill it with fire, WHY ARE THERE LIKE 5 TIMERS THOSE USE CPU THREADS
@@ -27,7 +27,7 @@ public class ColorChooseCommand extends Command {
 		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kGreenTarget);
 		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kRedTarget);
 		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kYellowTarget);	 
-		Robot.robotInstance.oi.colorServo.setPosition(.70);
+		Robot.robotInstance.outputs.colorServo.setPosition(.70);
 		startTimer.reset();
 		startTimer.start();
 	}
@@ -37,11 +37,11 @@ public class ColorChooseCommand extends Command {
 		if (startTimer.get() >= 0.75) {
 			if (endTimer.get() <= 0.0) {
 				if (safetyTimer.get() == 0.0) safetyTimer.start();
-				Color detectedColor = Robot.robotInstance.oi.m_colorSensor.getColor();
+				Color detectedColor = Robot.robotInstance.outputs.m_colorSensor.getColor();
 				Colors color;
 				ColorMatchResult match = Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.matchClosestColor(detectedColor);
 
-				Robot.robotInstance.wheelMotorSubsystem.wheelControl(0.35);
+				Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(0.35);
 
 				if (match.color == Robot.robotInstance.colorSensorSubsystem.kBlueTarget) {
 					color = Colors.Blue;
@@ -64,18 +64,18 @@ public class ColorChooseCommand extends Command {
 				if (color.toString().equals(Robot.robotInstance.colorChoice.getSelected())) {
 					safetyTimer.stop();
 					if (safetyTimer.get() < .3) {
-						Robot.robotInstance.wheelMotorSubsystem.wheelControl(0.0);
+						Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(0.0);
 						endTimer.start();
 					}
 					else {
-						Robot.robotInstance.wheelMotorSubsystem.wheelControl(-0.15);
+						Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(-0.15);
 						endTimer.start();
 					}
 				}
 			} 
 		}
 		if (safetyTimer.get() >= 3.0) {
-			Robot.robotInstance.wheelMotorSubsystem.wheelControl(0.0);
+			Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(0.0);
 		}
 	}
 
@@ -84,12 +84,12 @@ public class ColorChooseCommand extends Command {
 	protected boolean isFinished() {
 		//Stops the motor
 		if (startTimer.get() > 1.5){
-			if (Robot.robotInstance.wheelMotorSubsystem.getSpeed() == (0.0))	{
+			if (Robot.robotInstance.colorWheelMotorSubsystem.getWheelMotorSpeed() == (0.0))	{
 				endTimer.stop();
 				endTimer.reset();
 				return true;
 			}
-			else if (Robot.robotInstance.wheelMotorSubsystem.getSpeed() == -0.15 && endTimer.get() > 0.2){
+			else if (Robot.robotInstance.colorWheelMotorSubsystem.getWheelMotorSpeed() == -0.15 && endTimer.get() > 0.2){
 				endTimer.stop();
 				endTimer.reset();
 				return true;
@@ -100,8 +100,8 @@ public class ColorChooseCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.robotInstance.wheelMotorSubsystem.wheelControl(0.0);
-		Robot.robotInstance.oi.colorServo.setPosition(.1);
+		Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(0.0);
+		Robot.robotInstance.outputs.colorServo.setPosition(.1);
 		startTimer.stop();
 		safetyTimer.stop();
 		safetyTimer.reset();
