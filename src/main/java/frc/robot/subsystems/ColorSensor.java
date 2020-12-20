@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.commands.ColorMatchCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ColorSensorSubsystem extends Subsystem {
+public class ColorSensor extends Subsystem {
 	//TODO: i hate everything with this color sensor stuff, burn this to the ground and remake it
 	
 	//Establishes what RGB values are equal to what color

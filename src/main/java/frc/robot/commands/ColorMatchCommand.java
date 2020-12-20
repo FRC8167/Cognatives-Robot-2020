@@ -18,31 +18,31 @@ import frc.robot.Robot;
 //TODO: yes
 public class ColorMatchCommand extends Command {
 	public ColorMatchCommand() {
-		requires(Robot.robotInstance.colorSensorSubsystem);
+		requires(Robot.robotInstance.colorSensor);
 	}
 	
 	@Override
 	protected void initialize() {
 		//Adds RGB values from ColorSensorSubsystem
-		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kBlueTarget);
-		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kGreenTarget);
-		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kRedTarget);
-		Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensorSubsystem.kYellowTarget);
+		Robot.robotInstance.colorSensor.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensor.kBlueTarget);
+		Robot.robotInstance.colorSensor.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensor.kGreenTarget);
+		Robot.robotInstance.colorSensor.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensor.kRedTarget);
+		Robot.robotInstance.colorSensor.m_colorMatcher.addColorMatch(Robot.robotInstance.colorSensor.kYellowTarget);
 	}
 	
 	@Override
 	protected void execute() {
 		Color detectedColor = Robot.robotInstance.outputs.m_colorSensor.getColor();
 		Colors color;
-		ColorMatchResult match = Robot.robotInstance.colorSensorSubsystem.m_colorMatcher.matchClosestColor(detectedColor);
+		ColorMatchResult match = Robot.robotInstance.colorSensor.m_colorMatcher.matchClosestColor(detectedColor);
 
-		if (match.color == Robot.robotInstance.colorSensorSubsystem.kBlueTarget) {
+		if (match.color == Robot.robotInstance.colorSensor.kBlueTarget) {
 			color = Colors.Blue;
-		} else if (match.color == Robot.robotInstance.colorSensorSubsystem.kRedTarget) {
+		} else if (match.color == Robot.robotInstance.colorSensor.kRedTarget) {
 			color = Colors.Red;
-		} else if (match.color ==Robot.robotInstance.colorSensorSubsystem. kGreenTarget) {
+		} else if (match.color ==Robot.robotInstance.colorSensor. kGreenTarget) {
 			color = Colors.Green;
-		} else if (match.color == Robot.robotInstance.colorSensorSubsystem.kYellowTarget) {
+		} else if (match.color == Robot.robotInstance.colorSensor.kYellowTarget) {
 			color = Colors.Yellow;
 		} else {
 			color = Colors.Unknown;

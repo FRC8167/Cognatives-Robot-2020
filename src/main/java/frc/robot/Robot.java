@@ -1,31 +1,26 @@
 package frc.robot;
 
-// import edu.wpi.cscore.AxisCamera;
-// import edu.wpi.cscore.CameraServerJNI;
-// import edu.wpi.cscore.MjpegServer;
 import java.lang.InstantiationException;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.ColorSensorSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ColorWheelMotorSubsystem;
+import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 	//TODO: add some sort of getInstance (or getRobot) method for this THAT DOESNT GET FLAGGED AS A FUCKING MEMORY LEAK AGHHHH
 	public static Robot robotInstance;
 	
 	public final Timer autonomousTimer;
-	public final DriveSubsystem driveSubsystem;
-	public final ColorSensorSubsystem colorSensorSubsystem;
-	public final ColorWheelMotorSubsystem colorWheelMotorSubsystem;
 	public final SendableChooser<String> colorChoice;
-	public final UsbCamera camera;
 	public final OI outputs;
+	
+	public final DriveSubsystem driveSubsystem;
+	public final ColorSensor colorSensor;
+	public final ColorWheelMotor colorWheelMotor;
+	public final DumpActuator dumpActuator;
+	public final Camera camera;
 	
 	/**
 	 * Constructs a Robot instance, and sets the static Robot.robotInstance variable to it.
@@ -43,42 +38,22 @@ public class Robot extends TimedRobot {
 			System.out.println("CRITICAL ERROR: there has already been a Robot() instantiated!");
 		}
 		
+		this.outputs = new OI();
+		this.colorChoice = new SendableChooser<String>();
+		
 		// instantiates all the stuff
 		this.autonomousTimer = new Timer();
-		this.driveSubsystem = new DriveSubsystem();
-		this.colorSensorSubsystem = new ColorSensorSubsystem();
-		this.colorWheelMotorSubsystem = new ColorWheelMotorSubsystem();
-		this.outputs = new OI(); //TODO: maybe rename OI to something better? maybe just un-abbreviate it idk
-		this.colorChoice = new SendableChooser<String>();
-		this.camera = new UsbCamera("crappy webcam on slot 0", 0);
 		
-		// i dont know what this does but it is important, dont remove this
-		this.outputs.dumpActuator.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-	}
-	
-	private void cameraInit() {
-		camera.setFPS(20); // omg the camera is so bad LOL
-		camera.setResolution(320, 240); // HAHAHA 240P!
-		CameraServer.getInstance().startAutomaticCapture();
-	}
-	private void actuatorInit() {
-		this.outputs.dumpActuator.setSpeed(1);
-		this.outputs.cameraServo.setPosition(1);
-	}
-	private void colorchoicesInit() {
-		//adds color chooices to smart dashboard
-		//TODO: wtf does this DO? why is it yellow/green and red/blue??
-		colorChoice.setDefaultOption("Yellow", "Green");
-		colorChoice.addOption("Green", "Yellow");
-		colorChoice.addOption("Red", "Blue");
-		colorChoice.addOption("Blue", "Red");
-		SmartDashboard.putData("Choose Your Color", colorChoice);
-		SmartDashboard.updateValues();
+		this.driveSubsystem = new DriveSubsystem();
+		this.colorSensor = new ColorSensor();
+		this.colorWheelMotor = new ColorWheelMotor();
+		this.dumpActuator = new DumpActuator();
+		this.camera = new Camera(RobotMap.cameraPort);
 	}
 	
 	@Override
 	public void robotInit() {
-		//TODO: should this just go in the constructor? or should the constructor go in this? having both seems redundant
+		//TODO: make gyro subsystem?
 		//Calibrate the Gyro
 		/* 
 		wow what an incredibly helpful comment thank 
@@ -87,9 +62,14 @@ public class Robot extends TimedRobot {
 		*/
 		this.outputs.gyro.calibrate();
 		
-		cameraInit();
-		actuatorInit();
-		colorchoicesInit();
+		//adds color chooices to smart dashboard
+		//TODO: wtf does this DO? why is it yellow/green and red/blue??
+		colorChoice.setDefaultOption("Yellow", "Green");
+		colorChoice.addOption("Green", "Yellow");
+		colorChoice.addOption("Red", "Blue");
+		colorChoice.addOption("Blue", "Red");
+		SmartDashboard.putData("Choose Your Color", colorChoice);
+		SmartDashboard.updateValues();
 	}
 	
 	
@@ -109,7 +89,7 @@ public class Robot extends TimedRobot {
 		} else if (autonomousTimer.get() >= 4.0 && autonomousTimer.get() < 4.5) {
 			//TODO: why is there a 1.5 second gap in the code here?
 			//dump the balls into the hole? idk
-			this.outputs.dumpActuator.setSpeed(-0.9);
+			this.dumpActuator.setPosition(-0.9);
 		} else if (autonomousTimer.get() >= 4.5 && autonomousTimer.get() < 5.0) {
 			//TODO: figure out wtf this stuff does
 			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.7, 0.0);
@@ -128,8 +108,7 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void teleopInit() {
-		this.outputs.dumpActuator.setSpeed(0.6);
-		this.driveSubsystem.robotDifferentialDrive.setExpiration(1.0);
+		this.dumpActuator.setPosition(0.6);
 	}
 	
 	@Override

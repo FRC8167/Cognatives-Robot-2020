@@ -34,6 +34,8 @@ public class RobotMap {
 	//Servos
 	public static int dumpActuatorPort = (6);
 	public static final int ultrasonicPort = (0);
+	
+	public static final int cameraPort = 0;
 	public static int cameraServoPort = (7);
 	
 	//Buttons

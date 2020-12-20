@@ -6,7 +6,7 @@ import frc.robot.RobotMap;
 //import com.revrobotics.CANSparkMax;
 //import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class ColorWheelMotorSubsystem extends Subsystem {
+public class ColorWheelMotor extends Subsystem {
 	private Spark colorWheelMotor = new Spark(RobotMap.wheelMotorPort);
 	
 	/**

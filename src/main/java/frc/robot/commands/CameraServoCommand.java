@@ -21,13 +21,7 @@ public class CameraServoCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		//TODO: make a camera subsystem
-		if (Robot.robotInstance.outputs.cameraServo.getPosition() > 0.9){
-			Robot.robotInstance.outputs.cameraServo.setPosition(0);
-		}
-		else if (Robot.robotInstance.outputs.cameraServo.getPosition() <= .1){
-			Robot.robotInstance.outputs.cameraServo.setPosition(1);
-		}
+		Robot.robotInstance.camera.togglePosition();
 	}
 	
 	@Override

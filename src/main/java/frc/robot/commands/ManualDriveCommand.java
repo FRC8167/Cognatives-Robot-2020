@@ -19,11 +19,7 @@ public class ManualDriveCommand extends Command {
 		//getY is negative because the joystick reads the opposite way for some reason
 		double forwardSpeed = -Robot.robotInstance.outputs.stick.getY() * sensitivity;
 		double rotationSpeed = Robot.robotInstance.outputs.stick.getX() * sensitivity;
-		if (!Robot.robotInstance.outputs.reverseButton.get()) { //TODO: is there a reverse button anymore?
-			Robot.robotInstance.driveSubsystem.drive(forwardSpeed, rotationSpeed);
-		} else {
-			Robot.robotInstance.driveSubsystem.drive(-forwardSpeed, rotationSpeed);
-		}
+		Robot.robotInstance.driveSubsystem.drive(forwardSpeed, rotationSpeed);
 	}
 	
 	@Override

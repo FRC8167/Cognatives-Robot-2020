@@ -14,13 +14,13 @@ public class DumpSetCommand extends Command {
 	 * 					//TODO: test how position actually sets the position
 	 */
 	public DumpSetCommand(double position) {
+		requires(Robot.robotInstance.dumpActuator);
 		this.actuatorPosition = position;
 	}
 	
 	@Override
 	protected void initialize() {
-		// NOTE: `setSpeed` changes the position for some reason 
-		Robot.robotInstance.outputs.dumpActuator.setSpeed(this.actuatorPosition);
+		Robot.robotInstance.dumpActuator.setPosition(this.actuatorPosition);
 	}
 	
 	@Override

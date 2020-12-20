@@ -13,7 +13,7 @@ public class ColorWheelMotorCommand extends Command {
 	 * 						with 1.0 being clockwise. //TODO: VERIFY THIS
 	 */
 	public ColorWheelMotorCommand(double wheelSpeed) {
-		requires(Robot.robotInstance.colorWheelMotorSubsystem);
+		requires(Robot.robotInstance.colorWheelMotor);
 		this.wheelSpeed = wheelSpeed;
 	}
 
@@ -23,7 +23,7 @@ public class ColorWheelMotorCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(this.wheelSpeed);
+		Robot.robotInstance.colorWheelMotor.wheelMotorControl(this.wheelSpeed);
 	}
 	
 	@Override
@@ -33,12 +33,12 @@ public class ColorWheelMotorCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(0.0);
+		Robot.robotInstance.colorWheelMotor.wheelMotorControl(0.0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.robotInstance.colorWheelMotorSubsystem.wheelMotorControl(0.0);
+		Robot.robotInstance.colorWheelMotor.wheelMotorControl(0.0);
 	}
 
 }

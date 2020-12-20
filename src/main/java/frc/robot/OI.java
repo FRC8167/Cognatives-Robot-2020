@@ -2,7 +2,7 @@ package frc.robot;
 
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogInput;
+//import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
@@ -12,19 +12,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
 
 public class OI {
-	//TODO: should these all be inside subsystems? i feel like they should
 	public final Joystick stick = new Joystick(RobotMap.joystickPort);
-	public final I2C.Port i2cPort = I2C.Port.kOnboard;
-	public final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-	public final AnalogInput ultrasonicSensor = new AnalogInput(RobotMap.ultrasonicPort);
-	public final Servo dumpActuator = new Servo(RobotMap.dumpActuatorPort);
+	public final ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+	//public final AnalogInput ultrasonicSensor = new AnalogInput(RobotMap.ultrasonicPort);
+	//public final Servo dumpActuator = new Servo(RobotMap.dumpActuatorPort);
 	public final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public final Servo colorServo = new Servo(RobotMap.colorServoPort);
-	public final Servo cameraServo = new Servo(RobotMap.cameraServoPort);
-	
-	//This button is outside of public OI() becuase it doesn't excecute a command, but is checked in ManualDriveCommand
-	//TODO: what is this? should this be here?
-	public Button reverseButton = new JoystickButton(stick, RobotMap.reverseButtonNumber);
 	
 	public OI() {
 		//This is where you instantiate new buttons, the ports are just the numbers on the Joystick
