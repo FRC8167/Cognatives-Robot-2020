@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
 
 public class OI {
+	//TODO: these should all be in subsystems
 	public final Joystick stick = new Joystick(RobotMap.joystickPort);
 	public final ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
 	//public final AnalogInput ultrasonicSensor = new AnalogInput(RobotMap.ultrasonicPort);
@@ -20,6 +21,7 @@ public class OI {
 	public final Servo colorServo = new Servo(RobotMap.colorServoPort);
 	
 	public OI() {
+		//TODO: shouldnt these be class variables???
 		//This is where you instantiate new buttons, the ports are just the numbers on the Joystick
 		Button dumpButton = new JoystickButton(stick, RobotMap.dumpButtonNumber);
 		Button loadButton = new JoystickButton(stick, RobotMap.loadButtonNumber);//added by nick (thanks nick -tyler)
