@@ -20,6 +20,12 @@ public class Robot extends TimedRobot {
 	private final Camera camera;
 	
 	private static Robot robotInstance = null;
+	/**
+	 * gets the current Robot() instance, and if one does not exist yet, 
+	 * creates one. This is to make the Robot class effectively a singleton type.
+	 * 
+	 * @return the current Robot() instance.
+	 */
 	public synchronized static Robot getRobot() {
 		if (robotInstance==null) robotInstance = new Robot();
 		return robotInstance;
@@ -54,10 +60,10 @@ public class Robot extends TimedRobot {
 	public ColorSensor getColorSensor() {return colorSensor;}
 	
 	public Colors getSelectedColor() {
-		//TODO
+		//TODO - oh god
 		String color = colorChoice.getSelected();
 		return Colors.Unknown;
-	} 
+	}
 	
 	@Override
 	public void robotInit() {
