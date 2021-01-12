@@ -24,13 +24,13 @@ public class QuickTurnCommand extends Command {
 	public QuickTurnCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.robotInstance.driveSubsystem);
+		requires(Robot.getRobot().getDriveSubsystem());
 	}
-
+	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		initAngle = Robot.robotInstance.outputs.gyro.getAngle();
+		initAngle = Robot.getRobot().getOutputs().gyro.getAngle();
 		timer.start();
 	}
 	
@@ -40,16 +40,16 @@ public class QuickTurnCommand extends Command {
 		//Finds what direction you want and sets the motors to turn that direction
 		
 		//NOTE: by default (not pressed) the pov is set to -1
-		direction = Robot.robotInstance.outputs.stick.getPOV();
+		direction = Robot.getRobot().getOutputs().stick.getPOV();
 		
 		if (direction == 0) {
 			// how would you 'quickturn forwards'?
 		} else if (direction == 90) {
-			Robot.robotInstance.driveSubsystem.drive(0, RobotMap.turnRightValue);
+			Robot.getRobot().getDriveSubsystem().drive(0, RobotMap.turnRightValue);
 		} else if (direction == 180) {
-			Robot.robotInstance.driveSubsystem.drive(0, RobotMap.turn180Value);
+			Robot.getRobot().getDriveSubsystem().drive(0, RobotMap.turn180Value);
 		} else if (direction == 270) {
-			Robot.robotInstance.driveSubsystem.drive(0, RobotMap.turnLeftValue);
+			Robot.getRobot().getDriveSubsystem().drive(0, RobotMap.turnLeftValue);
 		} else {
 			// this is the default case, if we want to do something when the pov stick isnt moved it goes here
 		}
@@ -62,7 +62,7 @@ public class QuickTurnCommand extends Command {
 		if (timer.get() >= 2.0) return true;
 		
 		//get the current angle of the robot
-		double currentAngle = Robot.robotInstance.outputs.gyro.getAngle();
+		double currentAngle = Robot.getRobot().getOutputs().gyro.getAngle();
 		
 		//Checks what direction you chose by using the speed and ends if the desired angle is met
 		//TODO: test to make sure this still works
@@ -75,9 +75,9 @@ public class QuickTurnCommand extends Command {
 	@Override
 	protected void end() {
 		//Returns motors to stopped and ends the timer
-		Robot.robotInstance.driveSubsystem.drive(0, 0);		
+		Robot.getRobot().getDriveSubsystem().drive(0, 0);
 		timer.stop();
-		timer.reset(); //idk if this is necessary
+		timer.reset(); //TODO: idk if this is necessary
 	}
 	
 	// Called when another command which requires one or more of the same

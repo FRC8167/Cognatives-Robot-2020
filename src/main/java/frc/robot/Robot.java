@@ -1,45 +1,47 @@
 package frc.robot;
 
 import java.lang.InstantiationException;
+import java.sql.Time;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.util.Colors;
 import frc.robot.subsystems.*;
 
+class PooPoo extends TimedRobot {
+	public static PooPoo poopooInstance = null;
+	public static PooPoo getPooPoo() {
+		if (poopooInstance==null) poopooInstance = new PooPoo();
+		return poopooInstance;
+	}
+}
+
 public class Robot extends TimedRobot {
-	//TODO: add some sort of getInstance (or getRobot) method for this 
-	//THAT DOESNT GET FLAGGED AS A FRICKING MEMORY LEAK AGHHHH
-	//also make the current contructor private when you have a getRobot method,
-	//and change Robot::new to Robot::getRobot in Main.java; DONT CHANGE **ANYTHING** ELSE!
-	public static Robot robotInstance;
+	private final Timer autonomousTimer;
+	private final SendableChooser<String> colorChoice;
+	private final OI outputs;
 	
-	public final Timer autonomousTimer;
-	public final SendableChooser<String> colorChoice;
-	public final OI outputs;
+	private final DriveSubsystem driveSubsystem;
+	private final ColorSensor colorSensor;
+	private final ColorWheelMotor colorWheelMotor;
+	private final DumpActuator dumpActuator;
+	private final Camera camera;
 	
-	public final DriveSubsystem driveSubsystem;
-	public final ColorSensor colorSensor;
-	public final ColorWheelMotor colorWheelMotor;
-	public final DumpActuator dumpActuator;
-	public final Camera camera;
+	private static Robot robotInstance = null;
+	public synchronized static Robot getRobot() {
+		if (robotInstance==null) robotInstance = new Robot();
+		return robotInstance;
+	}
 	
 	/**
-	 * Constructs a Robot instance, and sets the static Robot.robotInstance variable to it.
-	 * 
-	 * @throws InstantiationException if there is already a robot instance created
+	 * Constructs the Robot instance.
 	 */
-	Robot() {
+	private Robot() {
 		// calls the TimedRobot constructor with 0.02 seconds between periodic methods, DO NOT CHANGE 0.02!
 		super(0.02d);
-		
-		// checks if a Robot() has already been made
-		if (robotInstance == null) robotInstance = this;
-		else {
-			//TODO: how to throw an InstantiationException here
-			System.out.println("CRITICAL ERROR: there has already been a Robot() instantiated!");
-		}
 		
 		this.outputs = new OI();
 		this.colorChoice = new SendableChooser<String>();
@@ -53,6 +55,20 @@ public class Robot extends TimedRobot {
 		this.dumpActuator = new DumpActuator();
 		this.camera = new Camera(RobotMap.cameraPort);
 	}
+	
+	//GETTERS
+	public OI getOutputs() {return outputs;}
+	public DriveSubsystem getDriveSubsystem() {return driveSubsystem;}
+	public DumpActuator getDumpActuator() {return dumpActuator;}
+	public Camera getCamera() {return camera;}
+	public ColorWheelMotor getColorWheelMotor() {return colorWheelMotor;}
+	public ColorSensor getColorSensor() {return colorSensor;}
+	
+	public Colors getSelectedColor() {
+		//TODO
+		String color = colorChoice.getSelected();
+		return Colors.Unknown;
+	} 
 	
 	@Override
 	public void robotInit() {
