@@ -18,6 +18,7 @@ public class OI {
 	//public final AnalogInput ultrasonicSensor = new AnalogInput(RobotMap.ultrasonicPort);
 	//public final Servo dumpActuator = new Servo(RobotMap.dumpActuatorPort);
 	public final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	//TODO: this one REALLLY needs to be in a subsystem
 	public final Servo colorServo = new Servo(RobotMap.colorServoPort);
 	
 	public OI() {

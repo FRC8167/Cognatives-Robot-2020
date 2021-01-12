@@ -1,8 +1,5 @@
 package frc.robot;
 
-import java.lang.InstantiationException;
-import java.sql.Time;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -10,14 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Colors;
 import frc.robot.subsystems.*;
-
-class PooPoo extends TimedRobot {
-	public static PooPoo poopooInstance = null;
-	public static PooPoo getPooPoo() {
-		if (poopooInstance==null) poopooInstance = new PooPoo();
-		return poopooInstance;
-	}
-}
 
 public class Robot extends TimedRobot {
 	private final Timer autonomousTimer;
@@ -104,23 +93,23 @@ public class Robot extends TimedRobot {
 		//TODO: use the command abstraction, don't directly set all of this stuff, or at least the robotDifferentialDrive.drive()
 		if (autonomousTimer.get() < 2.5) {
 			//drive forward at 0.75x speed for 2.5 seconds
-			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.75, 0.0);
+			this.driveSubsystem.drive(0.75, 0.0);
 		} else if (autonomousTimer.get() >= 4.0 && autonomousTimer.get() < 4.5) {
 			//TODO: why is there a 1.5 second gap in the code here?
 			//dump the balls into the hole? idk
 			this.dumpActuator.setPosition(-0.9);
 		} else if (autonomousTimer.get() >= 4.5 && autonomousTimer.get() < 5.0) {
 			//TODO: figure out what the frick this stuff does
-			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.7, 0.0);
+			this.driveSubsystem.drive(0.7, 0.0);
 		} else if (autonomousTimer.get() >= 5.0 && autonomousTimer.get() < 12.5) {
-			this.driveSubsystem.robotDifferentialDrive.stopMotor();
+			this.driveSubsystem.stopMotors();
 		} else if (autonomousTimer.get() >= 12.5 && autonomousTimer.get() < 14.0){
-			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(-0.7, 0.0);
+			this.driveSubsystem.drive(-0.7, 0.0);
 		} else if (autonomousTimer.get() >= 14.0 && autonomousTimer.get() < 15.0) {
-			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.0, 0.65);
+			this.driveSubsystem.drive(0.0, 0.65);
 		} else {
 			// stops the robot
-			this.driveSubsystem.robotDifferentialDrive.stopMotor();
+			this.driveSubsystem.stopMotors();
 		}
 	}
 	

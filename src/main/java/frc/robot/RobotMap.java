@@ -41,7 +41,7 @@ public class RobotMap {
 	public static final int dumpButtonNumber = 1;
 	public static final int loadButtonNumber = 3; //Added by nick to make it goto the load point
 	public static final int reverseButtonNumber = 4;
-	public static final int ultrasonicSensorButtonNumber = 5; //TODO: do we need this? didnt the UltS break?
+	public static final int ultrasonicSensorButtonNumber = 5; //TODO: do we need this? didnt the Ult Sensor break?
 	public static final int wheelClockwiseButtonNumber = 7;
 	public static final int wheelAntiClockwiseButtonNumber = 8;
 	public static final int colorDetectButtonNumber = 9;

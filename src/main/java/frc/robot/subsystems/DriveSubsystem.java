@@ -21,8 +21,7 @@ public class DriveSubsystem extends Subsystem {
 	private SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotorController, rearRightMotorController);
 	
 	//Instate Differential Drive
-	//TODO: should this be public? it really shouldnt be directly accessed outside of the DifferentialDrive class
-	public DifferentialDrive robotDifferentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+	private DifferentialDrive robotDifferentialDrive = new DifferentialDrive(leftMotors, rightMotors);
 	
 	public DriveSubsystem() {
 		this.robotDifferentialDrive.setExpiration(1.0);
@@ -38,6 +37,13 @@ public class DriveSubsystem extends Subsystem {
 	 */
 	public void drive(double forwardSpeed, double rotationSpeed) {
 		robotDifferentialDrive.arcadeDrive(forwardSpeed, rotationSpeed, false);
+	}
+	
+	/**
+	 * Stops the robot's motors.
+	 */
+	public void stopMotors() {
+		robotDifferentialDrive.stopMotor();
 	}
 	
 	@Override
