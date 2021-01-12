@@ -70,6 +70,7 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void robotInit() {
+		outputs.makeButtonsDoStuff();
 		//adds color chooices to smart dashboard
 		//TODO: what the frick does this DO? why is it yellow/green and red/blue??
 		colorChoice.setDefaultOption("Yellow", "Green");
@@ -90,27 +91,29 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousPeriodic() {
+		//TODO: COMPLETELY redo this autonomous stuff
+		/*
 		//TODO: use the command abstraction, don't directly set all of this stuff, or at least the robotDifferentialDrive.drive()
 		if (autonomousTimer.get() < 2.5) {
 			//drive forward at 0.75x speed for 2.5 seconds
-			this.driveSubsystem.drive(0.75, 0.0);
+			this.driveSubsystem.drive(0.2, 0.0);
 		} else if (autonomousTimer.get() >= 4.0 && autonomousTimer.get() < 4.5) {
 			//TODO: why is there a 1.5 second gap in the code here?
 			//dump the balls into the hole? idk
 			this.dumpActuator.setPosition(-0.9);
 		} else if (autonomousTimer.get() >= 4.5 && autonomousTimer.get() < 5.0) {
 			//TODO: figure out what the frick this stuff does
-			this.driveSubsystem.drive(0.7, 0.0);
+			this.driveSubsystem.drive(0.2, 0.0);
 		} else if (autonomousTimer.get() >= 5.0 && autonomousTimer.get() < 12.5) {
 			this.driveSubsystem.stopMotors();
 		} else if (autonomousTimer.get() >= 12.5 && autonomousTimer.get() < 14.0){
-			this.driveSubsystem.drive(-0.7, 0.0);
+			this.driveSubsystem.drive(-0.2, 0.0);
 		} else if (autonomousTimer.get() >= 14.0 && autonomousTimer.get() < 15.0) {
-			this.driveSubsystem.drive(0.0, 0.65);
+			this.driveSubsystem.drive(0.0, 0.3);
 		} else {
 			// stops the robot
 			this.driveSubsystem.stopMotors();
-		}
+		}//*/
 	}
 	
 	

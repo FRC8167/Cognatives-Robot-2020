@@ -10,7 +10,7 @@ public class ColorWheelMotorCommand extends Command {
 	 * Constructs a new ColorWheelMotorCommand, with the given speed.
 	 * 
 	 * @param wheelSpeed	the speed of the colorwheel motor, between -1.0 and 1.0, 
-	 * 						with 1.0 being clockwise. //TODO: VERIFY THIS
+	 * 						with 1.0 turning the color wheel clockwise.
 	 */
 	public ColorWheelMotorCommand(double wheelSpeed) {
 		requires(Robot.getRobot().getColorWheelMotor());
