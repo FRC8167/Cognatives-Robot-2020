@@ -36,7 +36,7 @@ public class ColorChooseCommand extends Command {
 		if (startTimer.get() >= 0.75) {
 			if (endTimer.get() <= 0.0) {
 				if (safetyTimer.get() == 0.0) safetyTimer.start();
-				Color detectedColor = Robot.getRobot().getOutputs().m_colorSensor.getColor();
+				Color detectedColor = Robot.getRobot().getColorSensor().getColor();
 				Colors color;
 				ColorMatchResult match = Robot.getRobot().getColorSensor().m_colorMatcher.matchClosestColor(detectedColor);
 

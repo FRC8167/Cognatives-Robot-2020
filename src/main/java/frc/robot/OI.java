@@ -1,8 +1,6 @@
 package frc.robot;
 
-import com.revrobotics.ColorSensorV3;
 //import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -14,7 +12,6 @@ public class OI {
 	//TODO: these should all be in subsystems
 	//TODO: this class probably should not exist at all
 	public final Joystick stick = new Joystick(RobotMap.joystickPort);
-	public final ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
 	//public final AnalogInput ultrasonicSensor = new AnalogInput(RobotMap.ultrasonicPort);
 	//public final Servo dumpActuator = new Servo(RobotMap.dumpActuatorPort);
 	//TODO: this one REALLLY needs to be in a subsystem

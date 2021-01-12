@@ -32,10 +32,10 @@ public class ColorMatchCommand extends Command {
 	
 	@Override
 	protected void execute() {
-		Color detectedColor = Robot.getRobot().getOutputs().m_colorSensor.getColor();
+		Color detectedColor = Robot.getRobot().getColorSensor().getColor();
 		Colors color;
 		ColorMatchResult match = Robot.getRobot().getColorSensor().m_colorMatcher.matchClosestColor(detectedColor);
-
+		
 		if (match.color == Robot.getRobot().getColorSensor().kBlueTarget) {
 			color = Colors.Blue;
 		} else if (match.color == Robot.getRobot().getColorSensor().kRedTarget) {
