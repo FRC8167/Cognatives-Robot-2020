@@ -17,7 +17,7 @@ public class ColorChooseCommand extends Command {
 	private static Timer endTimer = new Timer();
 	
 	public ColorChooseCommand() {
-		requires(Robot.robotInstance.colorSensor);
+		requires(Robot.getRobot().colorSensor);
 	}
 	
 	@Override

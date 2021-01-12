@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
-	//TODO: add some sort of getInstance (or getRobot) method for this THAT DOESNT GET FLAGGED AS A FUCKING MEMORY LEAK AGHHHH
+	//TODO: add some sort of getInstance (or getRobot) method for this 
+	//THAT DOESNT GET FLAGGED AS A FRICKING MEMORY LEAK AGHHHH
+	//also make the current contructor private when you have a getRobot method,
+	//and change Robot::new to Robot::getRobot in Main.java; DONT CHANGE **ANYTHING** ELSE!
 	public static Robot robotInstance;
 	
 	public final Timer autonomousTimer;
@@ -63,7 +66,7 @@ public class Robot extends TimedRobot {
 		this.outputs.gyro.calibrate();
 		
 		//adds color chooices to smart dashboard
-		//TODO: wtf does this DO? why is it yellow/green and red/blue??
+		//TODO: what the frick does this DO? why is it yellow/green and red/blue??
 		colorChoice.setDefaultOption("Yellow", "Green");
 		colorChoice.addOption("Green", "Yellow");
 		colorChoice.addOption("Red", "Blue");
@@ -91,7 +94,7 @@ public class Robot extends TimedRobot {
 			//dump the balls into the hole? idk
 			this.dumpActuator.setPosition(-0.9);
 		} else if (autonomousTimer.get() >= 4.5 && autonomousTimer.get() < 5.0) {
-			//TODO: figure out wtf this stuff does
+			//TODO: figure out what the frick this stuff does
 			this.driveSubsystem.robotDifferentialDrive.arcadeDrive(0.7, 0.0);
 		} else if (autonomousTimer.get() >= 5.0 && autonomousTimer.get() < 12.5) {
 			this.driveSubsystem.robotDifferentialDrive.stopMotor();
