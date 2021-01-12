@@ -25,12 +25,13 @@ public class QuickTurnCommand extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.getRobot().getDriveSubsystem());
+		requires(Robot.getRobot().getGyro());
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		initAngle = Robot.getRobot().getOutputs().gyro.getAngle();
+		initAngle = Robot.getRobot().getGyro().getAngle();
 		timer.start();
 	}
 	
@@ -54,7 +55,7 @@ public class QuickTurnCommand extends Command {
 			// this is the default case, if we want to do something when the pov stick isnt moved it goes here
 		}
 	}
-
+	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
@@ -62,7 +63,7 @@ public class QuickTurnCommand extends Command {
 		if (timer.get() >= 2.0) return true;
 		
 		//get the current angle of the robot
-		double currentAngle = Robot.getRobot().getOutputs().gyro.getAngle();
+		double currentAngle = Robot.getRobot().getGyro().getAngle();
 		
 		//Checks what direction you chose by using the speed and ends if the desired angle is met
 		//TODO: test to make sure this still works

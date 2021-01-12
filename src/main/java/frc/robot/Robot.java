@@ -17,6 +17,7 @@ public class Robot extends TimedRobot {
 	private final ColorSensor colorSensor;
 	private final ColorWheelMotor colorWheelMotor;
 	private final DumpActuator dumpActuator;
+	private final Gyro gyro;
 	private final Camera camera;
 	
 	private static Robot robotInstance = null;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
 		this.colorSensor = new ColorSensor();
 		this.colorWheelMotor = new ColorWheelMotor();
 		this.dumpActuator = new DumpActuator();
+		this.gyro = new Gyro();
 		this.camera = new Camera(RobotMap.cameraPort);
 	}
 	
@@ -57,6 +59,7 @@ public class Robot extends TimedRobot {
 	public DumpActuator getDumpActuator() {return dumpActuator;}
 	public Camera getCamera() {return camera;}
 	public ColorWheelMotor getColorWheelMotor() {return colorWheelMotor;}
+	public Gyro getGyro() {return gyro;}
 	public ColorSensor getColorSensor() {return colorSensor;}
 	
 	public Colors getSelectedColor() {
@@ -67,15 +70,6 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void robotInit() {
-		//TODO: make gyro subsystem?
-		//Calibrate the Gyro
-		/* 
-		wow what an incredibly helpful comment thank 
-		you so much i would have no idea what this 
-		did if that wasnt there
-		*/
-		this.outputs.gyro.calibrate();
-		
 		//adds color chooices to smart dashboard
 		//TODO: what the frick does this DO? why is it yellow/green and red/blue??
 		colorChoice.setDefaultOption("Yellow", "Green");
