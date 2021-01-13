@@ -26,7 +26,7 @@ public class ColorChooseCommand extends Command {
 		Robot.getRobot().getColorSensor().m_colorMatcher.addColorMatch(Robot.getRobot().getColorSensor().kGreenTarget);
 		Robot.getRobot().getColorSensor().m_colorMatcher.addColorMatch(Robot.getRobot().getColorSensor().kRedTarget);
 		Robot.getRobot().getColorSensor().m_colorMatcher.addColorMatch(Robot.getRobot().getColorSensor().kYellowTarget);	 
-		Robot.getRobot().getOutputs().colorServo.setPosition(.70);
+		Robot.getRobot().getColorSensor().setServoPosition(.70);
 		startTimer.reset();
 		startTimer.start();
 	}
@@ -100,7 +100,7 @@ public class ColorChooseCommand extends Command {
 	@Override
 	protected void end() {
 		Robot.getRobot().getColorWheelMotor().wheelMotorControl(0.0);
-		Robot.getRobot().getOutputs().colorServo.setPosition(.1);
+		Robot.getRobot().getColorSensor().setServoPosition(.1);
 		startTimer.stop();
 		safetyTimer.stop();
 		safetyTimer.reset();

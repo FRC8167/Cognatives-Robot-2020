@@ -40,14 +40,14 @@ public class ColorMatchCommand extends Command {
 			color = Colors.Blue;
 		} else if (match.color == Robot.getRobot().getColorSensor().kRedTarget) {
 			color = Colors.Red;
-		} else if (match.color ==Robot.getRobot().getColorSensor(). kGreenTarget) {
+		} else if (match.color ==Robot.getRobot().getColorSensor().kGreenTarget) {
 			color = Colors.Green;
 		} else if (match.color == Robot.getRobot().getColorSensor().kYellowTarget) {
 			color = Colors.Yellow;
 		} else {
 			color = Colors.Unknown;
 		}
-
+		
 		//Adds data to SmartDashboard
 		SmartDashboard.putNumber("Red", detectedColor.red);
 		SmartDashboard.putNumber("Green", detectedColor.green);

@@ -2,7 +2,6 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -12,8 +11,6 @@ public class OI {
 	//TODO: these should all be in subsystems
 	//TODO: this class probably should not exist at all
 	public final Joystick stick = new Joystick(RobotMap.joystickPort);
-	//TODO: this one REALLLY needs to be in a subsystem
-	public final Servo colorServo = new Servo(RobotMap.colorServoPort);
 	
 	public final Button 
 		dumpButton, loadButton, 
