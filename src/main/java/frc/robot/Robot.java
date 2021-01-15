@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -10,7 +11,7 @@ import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 	private final Timer autonomousTimer;
-	private final SendableChooser<String> colorChoice;
+	private final SendableChooser<Colors> colorChoice;
 	private final OI outputs;
 	
 	private final DriveSubsystem driveSubsystem;
@@ -40,7 +41,7 @@ public class Robot extends TimedRobot {
 		super(0.02d);
 		
 		this.outputs = new OI();
-		this.colorChoice = new SendableChooser<String>();
+		this.colorChoice = new SendableChooser<Colors>();
 		
 		// instantiates all the stuff
 		this.autonomousTimer = new Timer();
@@ -60,23 +61,20 @@ public class Robot extends TimedRobot {
 	public Camera getCamera() {return camera;}
 	public ColorWheelMotor getColorWheelMotor() {return colorWheelMotor;}
 	public Gyro getGyro() {return gyro;}
+	public JoystickInput getJoystick() {return outputs.joystick;}
 	public ColorSensor getColorSensor() {return colorSensor;}
 	
-	public Colors getSelectedColor() {
-		//TODO - oh god
-		String color = colorChoice.getSelected();
-		return Colors.Unknown;
-	}
+	public Colors getSelectedColor() {return colorChoice.getSelected();}
 	
 	@Override
 	public void robotInit() {
 		outputs.makeButtonsDoStuff();
 		//adds color chooices to smart dashboard
 		//TODO: what the frick does this DO? why is it yellow/green and red/blue??
-		colorChoice.setDefaultOption("Yellow", "Green");
-		colorChoice.addOption("Green", "Yellow");
-		colorChoice.addOption("Red", "Blue");
-		colorChoice.addOption("Blue", "Red");
+		colorChoice.setDefaultOption("Yellow", Colors.Green);
+		colorChoice.addOption("Green", Colors.Yellow);
+		colorChoice.addOption("Red", Colors.Blue);
+		colorChoice.addOption("Blue", Colors.Red);
 		SmartDashboard.putData("Choose Your Color", colorChoice);
 		SmartDashboard.updateValues();
 	}

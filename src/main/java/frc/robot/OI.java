@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
 
 public class OI {
-	//TODO: these should all be in subsystems
 	//TODO: this class probably should not exist at all
-	public final Joystick stick = new Joystick(RobotMap.joystickPort);
+	public final JoystickInput joystick = new JoystickInput(RobotMap.joystickPort);
 	
-	public final Button 
+	private final Button 
 		dumpButton, loadButton, 
 		wheelClockwiseButton, wheelAntiClockwiseButton, 
 		colorChooseButton, 
@@ -20,16 +19,15 @@ public class OI {
 		servoCameraButton;
 
 	public OI() {
-		//TODO: put these into a joystick subsystem/class?
 		//This is where you instantiate new buttons, the ports are just the numbers on the Joystick
-		dumpButton = new JoystickButton(stick, RobotMap.dumpButtonNumber);
-		loadButton = new JoystickButton(stick, RobotMap.loadButtonNumber);//added by nick (thanks nick -tyler)
-		wheelClockwiseButton = new JoystickButton(stick, RobotMap.wheelClockwiseButtonNumber);
-		wheelAntiClockwiseButton = new JoystickButton(stick, RobotMap.wheelAntiClockwiseButtonNumber);
-		colorChooseButton = new JoystickButton(stick, RobotMap.colorDetectButtonNumber);
+		dumpButton = joystick.getButton(RobotMap.dumpButtonNumber);
+		loadButton = joystick.getButton(RobotMap.loadButtonNumber);//added by nick (thanks nick -tyler)
+		wheelClockwiseButton = joystick.getButton(RobotMap.wheelClockwiseButtonNumber);
+		wheelAntiClockwiseButton = joystick.getButton(RobotMap.wheelAntiClockwiseButtonNumber);
+		colorChooseButton = joystick.getButton(RobotMap.colorDetectButtonNumber);
 		//ultrasonicSensorButton = new JoystickButton(stick, RobotMap.ultrasonicSensorButtonNumber);	
-		turn90DegreesButton = new JoystickButton(stick, RobotMap.turn90DegreesButtonNumber);
-		servoCameraButton = new JoystickButton(stick, RobotMap.servoCameraButtonNumber);
+		turn90DegreesButton = joystick.getButton(RobotMap.turn90DegreesButtonNumber);
+		servoCameraButton = joystick.getButton(RobotMap.servoCameraButtonNumber);
 	}
 	
 	public void makeButtonsDoStuff() {

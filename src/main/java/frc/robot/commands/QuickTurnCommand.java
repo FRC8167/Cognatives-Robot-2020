@@ -41,7 +41,7 @@ public class QuickTurnCommand extends Command {
 		//Finds what direction you want and sets the motors to turn that direction
 		
 		//NOTE: by default (not pressed) the pov is set to -1
-		direction = Robot.getRobot().getOutputs().stick.getPOV();
+		direction = Robot.getRobot().getJoystick().getPOV();
 		
 		if (direction == 0) {
 			// how would you 'quickturn forwards'?
