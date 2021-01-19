@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -8,17 +10,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Colors;
 import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 public class Robot extends TimedRobot {
 	private final Timer autonomousTimer;
 	private final SendableChooser<Colors> colorChoice;
-	private final OI outputs;
 	
 	private final DriveSubsystem driveSubsystem;
 	private final ColorSensor colorSensor;
 	private final ColorWheelMotor colorWheelMotor;
 	private final DumpActuator dumpActuator;
 	private final Gyro gyro;
+	private final JoystickInput joystick;
 	private final Camera camera;
 	
 	private static Robot robotInstance = null;
@@ -40,7 +43,6 @@ public class Robot extends TimedRobot {
 		// calls the TimedRobot constructor with 0.02 seconds between periodic methods, DO NOT CHANGE 0.02!
 		super(0.02d);
 		
-		this.outputs = new OI();
 		this.colorChoice = new SendableChooser<Colors>();
 		
 		// instantiates all the stuff
@@ -50,25 +52,56 @@ public class Robot extends TimedRobot {
 		this.colorSensor = new ColorSensor();
 		this.colorWheelMotor = new ColorWheelMotor();
 		this.dumpActuator = new DumpActuator();
+		this.joystick = new JoystickInput(RobotMap.joystickPort);
 		this.gyro = new Gyro();
 		this.camera = new Camera(RobotMap.cameraPort);
 	}
 	
 	//GETTERS
-	public OI getOutputs() {return outputs;}
 	public DriveSubsystem getDriveSubsystem() {return driveSubsystem;}
 	public DumpActuator getDumpActuator() {return dumpActuator;}
 	public Camera getCamera() {return camera;}
 	public ColorWheelMotor getColorWheelMotor() {return colorWheelMotor;}
 	public Gyro getGyro() {return gyro;}
-	public JoystickInput getJoystick() {return outputs.joystick;}
+	public JoystickInput getJoystick() {return joystick;}
 	public ColorSensor getColorSensor() {return colorSensor;}
 	
 	public Colors getSelectedColor() {return colorChoice.getSelected();}
 	
+	private void makeButtonsDoStuff() { //TODO: change crappy name
+		JoystickButton 
+			dumpButton, loadButton, 
+			wheelClockwiseButton, wheelAntiClockwiseButton, 
+			colorChooseButton, 
+			turn90DegreesButton,
+			servoCameraButton;
+		//This is where you instantiate new buttons, the ports are just the numbers on the Joystick
+		dumpButton = joystick.getButton(RobotMap.dumpButtonNumber);
+		loadButton = joystick.getButton(RobotMap.loadButtonNumber);//added by nick (thanks nick -tyler)
+		wheelClockwiseButton = joystick.getButton(RobotMap.wheelClockwiseButtonNumber);
+		wheelAntiClockwiseButton = joystick.getButton(RobotMap.wheelAntiClockwiseButtonNumber);
+		colorChooseButton = joystick.getButton(RobotMap.colorDetectButtonNumber);
+		//ultrasonicSensorButton = new JoystickButton(stick, RobotMap.ultrasonicSensorButtonNumber);	
+		turn90DegreesButton = joystick.getButton(RobotMap.turn90DegreesButtonNumber);
+		servoCameraButton = joystick.getButton(RobotMap.servoCameraButtonNumber);
+		
+		//This is where you tell the buttons to excecute commands
+		dumpButton.whenPressed(new DumpSetCommand(-0.9));
+		dumpButton.whenReleased(new DumpSetCommand(.6));
+		loadButton.whenPressed(new DumpSetCommand(-0.5));
+		loadButton.whenReleased(new DumpSetCommand(.6));
+		
+		wheelClockwiseButton.whileHeld(new ColorWheelMotorCommand(.40)); //NEO brushless motor stuff
+		wheelAntiClockwiseButton.whileHeld(new ColorWheelMotorCommand(-.40));
+		colorChooseButton.whenReleased(new ColorChooseCommand());
+		turn90DegreesButton.whenPressed(new QuickTurnCommand());
+		
+		servoCameraButton.whenPressed(new CameraServoCommand());
+	}
+
 	@Override
 	public void robotInit() {
-		outputs.makeButtonsDoStuff();
+		makeButtonsDoStuff();
 		//adds color chooices to smart dashboard
 		//TODO: what the frick does this DO? why is it yellow/green and red/blue??
 		colorChoice.setDefaultOption("Yellow", Colors.Green);
@@ -78,8 +111,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Choose Your Color", colorChoice);
 		SmartDashboard.updateValues();
 	}
-	
-	
+
 	@Override
 	public void autonomousInit() {
 		// resets and restarts the autonomous timer (wow thanks tyler for the helpful comment)
