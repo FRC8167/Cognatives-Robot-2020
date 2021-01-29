@@ -7,15 +7,10 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.ColorMatchResult;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.util.Colors;
 import frc.robot.Robot;
 
-//TODO: yes
+//TODO: THIS ENTIRE COMMAND LITERALLY DOES NOTHING EXCEPT UPDATe THE SHUFFLEBOARD WITH DEBUG VALUES WHAT THE HELL
 public class ColorMatchCommand extends Command {
 	public ColorMatchCommand() {
 		requires(Robot.getRobot().getColorSensor());
@@ -32,29 +27,8 @@ public class ColorMatchCommand extends Command {
 	
 	@Override
 	protected void execute() {
-		Color detectedColor = Robot.getRobot().getColorSensor().getColor();
-		Colors color;
-		ColorMatchResult match = Robot.getRobot().getColorSensor().m_colorMatcher.matchClosestColor(detectedColor);
+		Robot.getRobot().getColorSensor().getClosestColor();
 		
-		if (match.color == Robot.getRobot().getColorSensor().kBlueTarget) {
-			color = Colors.Blue;
-		} else if (match.color == Robot.getRobot().getColorSensor().kRedTarget) {
-			color = Colors.Red;
-		} else if (match.color ==Robot.getRobot().getColorSensor().kGreenTarget) {
-			color = Colors.Green;
-		} else if (match.color == Robot.getRobot().getColorSensor().kYellowTarget) {
-			color = Colors.Yellow;
-		} else {
-			color = Colors.Unknown;
-		}
-		
-		//Adds data to SmartDashboard
-		SmartDashboard.putNumber("Red", detectedColor.red);
-		SmartDashboard.putNumber("Green", detectedColor.green);
-		SmartDashboard.putNumber("Blue", detectedColor.blue);
-		SmartDashboard.putNumber("Confidence", match.confidence);
-		SmartDashboard.putString("Detected Color", color.toString());
-
 	}
 	
 	@Override

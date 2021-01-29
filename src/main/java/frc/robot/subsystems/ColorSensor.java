@@ -2,6 +2,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.util.Color;
+import com.revrobotics.ColorMatchResult;
+import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.util.Colors;
 import frc.robot.RobotMap;
 import frc.robot.commands.ColorMatchCommand;
 import edu.wpi.first.wpilibj.I2C;
@@ -37,8 +41,33 @@ public class ColorSensor extends Subsystem {
 		return colorSensor.getColor();
 	}
 	
-	public Color getClosestColor() {
-		return null;
+	public Colors getClosestColor() {
+		//TODO: this is literal garbage; change this ASAP
+		//TODO: specifically, use a non-garbage distance function to get the min color distance
+		Color detectedColor = Robot.getRobot().getColorSensor().getColor();
+		ColorMatchResult match = Robot.getRobot().getColorSensor().m_colorMatcher.matchClosestColor(detectedColor);
+		Colors color;
+		
+		if (match.color == Robot.getRobot().getColorSensor().kBlueTarget) {
+			color = Colors.Blue;
+		} else if (match.color == Robot.getRobot().getColorSensor().kRedTarget) {
+			color = Colors.Red;
+		} else if (match.color ==Robot.getRobot().getColorSensor(). kGreenTarget) {
+			color = Colors.Green;
+		} else if (match.color == Robot.getRobot().getColorSensor().kYellowTarget) {
+			color = Colors.Yellow;
+		} else {
+			color = Colors.Unknown;
+		}
+
+		//Adds data to SmartDashboard
+		SmartDashboard.putNumber("Red", detectedColor.red);
+		SmartDashboard.putNumber("Green", detectedColor.green);
+		SmartDashboard.putNumber("Blue", detectedColor.blue);
+		SmartDashboard.putNumber("Confidence", match.confidence);
+		SmartDashboard.putString("Detected Color", color.toString());
+
+		return color;
 	}
 	
 	public void setServoPosition(double pos) {

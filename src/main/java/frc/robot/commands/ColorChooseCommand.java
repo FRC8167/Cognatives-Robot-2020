@@ -1,11 +1,7 @@
 package frc.robot.commands;
 
-import com.revrobotics.ColorMatchResult;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 
 import frc.robot.util.Colors;
 import frc.robot.Robot;
@@ -36,29 +32,8 @@ public class ColorChooseCommand extends Command {
 		if (startTimer.get() >= 0.75) {
 			if (endTimer.get() <= 0.0) {
 				if (safetyTimer.get() == 0.0) safetyTimer.start();
-				Color detectedColor = Robot.getRobot().getColorSensor().getColor();
-				Colors color;
-				ColorMatchResult match = Robot.getRobot().getColorSensor().m_colorMatcher.matchClosestColor(detectedColor);
-
-				Robot.getRobot().getColorWheelMotor().wheelMotorControl(0.35);
-
-				if (match.color == Robot.getRobot().getColorSensor().kBlueTarget) {
-					color = Colors.Blue;
-				} else if (match.color == Robot.getRobot().getColorSensor().kRedTarget) {
-					color = Colors.Red;
-				} else if (match.color ==Robot.getRobot().getColorSensor(). kGreenTarget) {
-					color = Colors.Green;
-				} else if (match.color == Robot.getRobot().getColorSensor().kYellowTarget) {
-					color = Colors.Yellow;
-				} else {
-					color = Colors.Unknown;
-				}
 				
-				SmartDashboard.putNumber("Red", detectedColor.red);
-				SmartDashboard.putNumber("Green", detectedColor.green);
-				SmartDashboard.putNumber("Blue", detectedColor.blue);
-				SmartDashboard.putNumber("Confidence", match.confidence);
-				SmartDashboard.putString("Detected Color", color.toString());
+				Colors color = Robot.getRobot().getColorSensor().getClosestColor();
 				
 				if (color.equals(Robot.getRobot().getSelectedColor())) {
 					safetyTimer.stop();
