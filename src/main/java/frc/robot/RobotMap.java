@@ -26,17 +26,19 @@ public class RobotMap {
 	public static final int rearLeftPort = 2;
 	public static final int frontRightPort = 3;
 	public static final int rearRightPort = 4;
-	
+
 	public static final int colorServoPort = 5;
+	
+	public static final int dumpActuatorPort = 6;
 	public static final int wheelMotorPort = 9;
+	
+	//Servos
+	//public static final int dumpActuatorPort = 6;
+	public static final int cameraServoPort = 7;
 	
 	//USB ports
 	public static final int cameraPort = 0;
-	
-	//Servos
-	public static final int dumpActuatorPort = 6;
-	public static final int cameraServoPort = 7;
-	
+
 	//Buttons
 	public static final int dumpButtonNumber = 1;
 	public static final int loadButtonNumber = 3; //Added by nick to make it goto the load point
