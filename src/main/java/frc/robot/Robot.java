@@ -17,7 +17,7 @@ public class Robot extends TimedRobot {
 	private final DriveSubsystem driveSubsystem;
 	private final ColorSensor colorSensor;
 	private final ColorWheelMotor colorWheelMotor;
-	private final DumpActuator dumpActuator;
+	private final DumpActuatorSpark dumpActuatorSpark;
 	private final Gyro gyro;
 	private final JoystickInput joystick;
 	private final Camera camera;
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
 		this.driveSubsystem = new DriveSubsystem();
 		this.colorSensor = new ColorSensor();
 		this.colorWheelMotor = new ColorWheelMotor();
-		this.dumpActuator = new DumpActuator();
+		this.dumpActuatorSpark = new DumpActuatorSpark();
 		this.joystick = new JoystickInput(RobotMap.joystickPort);
 		this.gyro = new Gyro();
 		this.camera = new Camera(RobotMap.cameraPort);
@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
 	
 	//GETTERS
 	public DriveSubsystem getDriveSubsystem() {return driveSubsystem;}
-	public DumpActuator getDumpActuator() {return dumpActuator;}
+	public DumpActuatorSpark getDumpActuator() {return dumpActuatorSpark;}
 	public Camera getCamera() {return camera;}
 	public ColorWheelMotor getColorWheelMotor() {return colorWheelMotor;}
 	public Gyro getGyro() {return gyro;}
@@ -144,10 +144,9 @@ public class Robot extends TimedRobot {
 		}//*/
 	}
 	
-	
 	@Override
 	public void teleopInit() {
-		this.dumpActuator.setPosition(0.6);
+		
 	}
 	
 	@Override

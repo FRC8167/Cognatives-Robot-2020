@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.RobotMap;
 
+@Deprecated
 public class DumpActuator extends Subsystem {
 	private final Servo actuator = new Servo(RobotMap.dumpActuatorPort);
 	

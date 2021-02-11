@@ -30,6 +30,7 @@ public class RobotMap {
 	public static final int colorServoPort = 5;
 	
 	public static final int dumpActuatorPort = 6;
+	public static final int climbMotorPort = 8;
 	public static final int wheelMotorPort = 9;
 	
 	//Servos
