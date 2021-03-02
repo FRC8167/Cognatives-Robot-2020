@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -73,6 +74,7 @@ public class Robot extends TimedRobot {
 			colorChooseButton, 
 			turn90DegreesButton,
 			servoCameraButton;
+		
 		//This is where you instantiate new buttons, the ports are just the numbers on the Joystick
 		dumpButton = joystick.getButton(RobotMap.dumpButtonNumber);
 		loadButton = joystick.getButton(RobotMap.loadButtonNumber);//added by nick (thanks nick -tyler)
@@ -95,6 +97,29 @@ public class Robot extends TimedRobot {
 		turn90DegreesButton.whenPressed(new QuickTurnCommand());
 		
 		servoCameraButton.whenPressed(new CameraServoCommand());
+
+		joystick.getButton(11).whileHeld(new Command() {
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+			@Override
+			protected void execute() {
+				System.out.println(dumpActuatorSpark.getPosition());
+				dumpActuatorSpark.setSpeed(0.4);
+			}
+			@Override protected void end() {dumpActuatorSpark.setSpeed(0.0);}
+		});
+		joystick.getButton(12).whileHeld(new Command() {
+			@Override
+			public boolean isFinished() {return false;}
+			@Override
+			protected void execute() {
+				dumpActuatorSpark.setSpeed(-0.4);
+			}
+			@Override protected void end() {dumpActuatorSpark.setSpeed(0.0);}
+		});
+		
 	}
 
 	@Override
