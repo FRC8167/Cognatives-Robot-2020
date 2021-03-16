@@ -19,7 +19,7 @@ public class ManualDriveCommand extends Command {
 		//getY is negative because the joystick reads the opposite way for some reason
 		double forwardSpeed = Robot.getRobot().getJoystick().getY() * sensitivity;
 		double rotationSpeed = Robot.getRobot().getJoystick().getX() * sensitivity;
-		Robot.getRobot().getDriveSubsystem().drive(forwardSpeed, rotationSpeed);
+		Robot.getRobot().getDriveSubsystem().drive(forwardSpeed, -rotationSpeed);
 	}
 	
 	@Override
