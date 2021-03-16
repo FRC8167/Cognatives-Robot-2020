@@ -18,10 +18,11 @@ public class Robot extends TimedRobot {
 	private final DriveSubsystem driveSubsystem;
 	private final ColorSensor colorSensor;
 	private final ColorWheelMotor colorWheelMotor;
+	private final ClimbMotor climbMotor;
 	private final DumpActuatorSpark dumpActuatorSpark;
 	private final Gyro gyro;
 	private final JoystickInput joystick;
-	private final Camera camera;
+	//private final Camera camera;
 	
 	private static Robot robotInstance = null;
 	/**
@@ -50,17 +51,19 @@ public class Robot extends TimedRobot {
 		this.driveSubsystem = new DriveSubsystem();
 		this.colorSensor = new ColorSensor();
 		this.colorWheelMotor = new ColorWheelMotor();
+		this.climbMotor = new ClimbMotor();
 		this.dumpActuatorSpark = new DumpActuatorSpark();
 		this.joystick = new JoystickInput(RobotMap.joystickPort);
 		this.gyro = new Gyro();
-		this.camera = new Camera(RobotMap.cameraPort);
+		//this.camera = new Camera(RobotMap.cameraPort);
 	}
 	
 	//GETTERS
 	public DriveSubsystem getDriveSubsystem() {return driveSubsystem;}
 	public DumpActuatorSpark getDumpActuator() {return dumpActuatorSpark;}
-	public Camera getCamera() {return camera;}
+	public Camera getCamera() {return null;}
 	public ColorWheelMotor getColorWheelMotor() {return colorWheelMotor;}
+	public ClimbMotor getClimbMotor() {return climbMotor;}
 	public Gyro getGyro() {return gyro;}
 	public JoystickInput getJoystick() {return joystick;}
 	public ColorSensor getColorSensor() {return colorSensor;}
@@ -70,20 +73,20 @@ public class Robot extends TimedRobot {
 	private void makeButtonsDoStuff() { //TODO: change crappy name
 		JoystickButton 
 			dumpButton, loadButton, 
-			wheelClockwiseButton, wheelAntiClockwiseButton, 
-			colorChooseButton, 
-			turn90DegreesButton,
-			servoCameraButton;
+			//wheelClockwiseButton, wheelAntiClockwiseButton, 
+			//turn90DegreesButton,
+			//servoCameraButton;
+			colorChooseButton;
 		
 		//This is where you instantiate new buttons, the ports are just the numbers on the Joystick
 		dumpButton = joystick.getButton(RobotMap.dumpButtonNumber);
 		loadButton = joystick.getButton(RobotMap.loadButtonNumber);//added by nick (thanks nick -tyler)
-		wheelClockwiseButton = joystick.getButton(RobotMap.wheelClockwiseButtonNumber);
-		wheelAntiClockwiseButton = joystick.getButton(RobotMap.wheelAntiClockwiseButtonNumber);
+		//wheelClockwiseButton = joystick.getButton(RobotMap.wheelClockwiseButtonNumber);
+		//wheelAntiClockwiseButton = joystick.getButton(RobotMap.wheelAntiClockwiseButtonNumber);
 		colorChooseButton = joystick.getButton(RobotMap.colorDetectButtonNumber);
 		//ultrasonicSensorButton = new JoystickButton(stick, RobotMap.ultrasonicSensorButtonNumber);	
-		turn90DegreesButton = joystick.getButton(RobotMap.turn90DegreesButtonNumber);
-		servoCameraButton = joystick.getButton(RobotMap.servoCameraButtonNumber);
+		//turn90DegreesButton = joystick.getButton(RobotMap.turn90DegreesButtonNumber);
+		//servoCameraButton = joystick.getButton(RobotMap.servoCameraButtonNumber);
 		
 		//This is where you tell the buttons to excecute commands
 		dumpButton.whenPressed(new DumpSetCommand(-0.9));
@@ -91,33 +94,33 @@ public class Robot extends TimedRobot {
 		loadButton.whenPressed(new DumpSetCommand(-0.5));
 		loadButton.whenReleased(new DumpSetCommand(.6));
 		
-		wheelClockwiseButton.whileHeld(new ColorWheelMotorCommand(.40)); //NEO brushless motor stuff
-		wheelAntiClockwiseButton.whileHeld(new ColorWheelMotorCommand(-.40));
+		//wheelClockwiseButton.whileHeld(new ColorWheelMotorCommand(.40)); //NEO brushless motor stuff
+		//wheelAntiClockwiseButton.whileHeld(new ColorWheelMotorCommand(-.40));
 		colorChooseButton.whenReleased(new ColorChooseCommand());
-		turn90DegreesButton.whenPressed(new QuickTurnCommand());
+		//turn90DegreesButton.whenPressed(new QuickTurnCommand());
 		
-		servoCameraButton.whenPressed(new CameraServoCommand());
+		//servoCameraButton.whenPressed(new CameraServoCommand());
 
-		joystick.getButton(11).whileHeld(new Command() {
-			@Override
-			public boolean isFinished() {
-				return false;
-			}
-			@Override
-			protected void execute() {
-				System.out.println(dumpActuatorSpark.getPosition());
-				dumpActuatorSpark.setSpeed(0.4);
-			}
+		joystick.getButton(RobotMap.dumpActuatorDownButtonNumber).whileHeld(new Command() {
+			@Override public boolean isFinished() {return false;}
+			@Override protected void execute() {dumpActuatorSpark.setSpeed(-0.4);}
 			@Override protected void end() {dumpActuatorSpark.setSpeed(0.0);}
 		});
-		joystick.getButton(12).whileHeld(new Command() {
-			@Override
-			public boolean isFinished() {return false;}
-			@Override
-			protected void execute() {
-				dumpActuatorSpark.setSpeed(-0.4);
-			}
+		joystick.getButton(RobotMap.dumpActuatorUpButtonNumber).whileHeld(new Command() {
+			@Override public boolean isFinished() {return false;}
+			@Override protected void execute() {dumpActuatorSpark.setSpeed(0.4);}
 			@Override protected void end() {dumpActuatorSpark.setSpeed(0.0);}
+		});
+
+		joystick.getButton(7).whileHeld(new Command() {
+			@Override public boolean isFinished() {return false;}
+			@Override protected void execute() {climbMotor.setSpeed(1.0);}
+			@Override protected void end() {climbMotor.setSpeed(0.0);}
+		});
+		joystick.getButton(8).whileHeld(new Command() {
+			@Override public boolean isFinished() {return false;}
+			@Override protected void execute() {climbMotor.setSpeed(-1.0);}
+			@Override protected void end() {climbMotor.setSpeed(0.0);}
 		});
 		
 	}
