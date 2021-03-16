@@ -33,6 +33,8 @@ public class RobotMap {
 	public static final int climbMotorPort = 8;
 	public static final int wheelMotorPort = 9;
 	
+	public static final int DumpActuatorCANId = 1;
+	
 	//Servos
 	//public static final int dumpActuatorPort = 6;
 	public static final int cameraServoPort = 7;
@@ -49,7 +51,9 @@ public class RobotMap {
 	public static final int wheelAntiClockwiseButtonNumber = 8;
 	public static final int colorDetectButtonNumber = 9;
 	public static final int servoCameraButtonNumber = 10;
-	public static final int turn90DegreesButtonNumber = 11;
+	//public static final int turn90DegreesButtonNumber = 11;
+	public static final int dumpActuatorDownButtonNumber = 11;
+	public static final int dumpActuatorUpButtonNumber = 12;
 	
 	//Speed Values for QuickTurnCommand
 	public static final double turnLeftValue = -.75;
